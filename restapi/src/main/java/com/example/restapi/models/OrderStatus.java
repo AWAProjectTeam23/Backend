@@ -1,2 +1,4 @@
-package com.example.restapi.models;public class OrderStatus {
+package com.example.restapi.models;
+
+public class OrderStatus {
 }
