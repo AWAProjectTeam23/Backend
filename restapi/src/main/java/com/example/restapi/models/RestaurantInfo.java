@@ -1,4 +1,2 @@
-package com.example.restapi.models;
-
-public class RestaurantInfo {
+package com.example.restapi.models;public class RestaurantInfo {
 }
