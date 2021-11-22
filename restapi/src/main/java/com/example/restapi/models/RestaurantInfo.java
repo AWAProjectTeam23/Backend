@@ -1,19 +1,21 @@
 package com.example.restapi.models;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.List;
 
 @Entity
 @Table(name = "restaurantinfo")
 public class RestaurantInfo {
+
     @Id
     @Column(name = "restaurant_uuid")
     private String restaurantId;
-    //private String restaurantManagerUserId;
+
+    @Column(name = "restaurantmanager_uuid")
+    private String restaurantManagerUserId;
 
     @Column(name = "restaurantname")
     private String restaurantName;
@@ -37,37 +39,13 @@ public class RestaurantInfo {
     private String priceLevel;
 
 
+    public RestaurantInfo() {}
 
-    public String getInfo() {
-        return restaurantId + " " +
-                restaurantName + " " +
-                address + " " +
-                open_hour + " - " +
-                closing_hour + " " +
-                imageURL + " " +
-                restaurantStyle + " " +
-                priceLevel;
-    }
-
-
-    public void setId(String  restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    public RestaurantInfo() {
-
-    }
-
-    public RestaurantInfo(String restaurantName){
-        this.restaurantName = restaurantName;
-
-    }
-
-    public RestaurantInfo(String restaurantId, String restaurantName, String address,
+    public RestaurantInfo(String restaurantId, String restaurantManagerUserId, String restaurantName, String address,
                           String open_hour, String closing_hour, String imageURL, String restaurantStyle, String priceLevel)
     {
         this.restaurantId = restaurantId;
-        //this.restaurantManagerUserId = restaurantManagerUserId;
+        this.restaurantManagerUserId = restaurantManagerUserId;
         this.restaurantName = restaurantName;
         this.address = address;
         this.open_hour = open_hour;
@@ -75,5 +53,37 @@ public class RestaurantInfo {
         this.imageURL = imageURL;
         this.restaurantStyle = restaurantStyle;
         this.priceLevel = priceLevel;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public String getRestaurantManagerUserId() {
+        return restaurantManagerUserId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getOperatingHour() {
+        return open_hour + " " + closing_hour;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public String getRestaurantStyle() {
+        return restaurantStyle;
+    }
+
+    public String getPriceLevel() {
+        return priceLevel;
     }
 }
