@@ -32,11 +32,11 @@ public class WebsiteController {
         var resp = webService.getMenu();
         return ResponseEntity.ok(resp);
     }
-    /* @GetMapping("/category")
+    @GetMapping("/category")
     public ResponseEntity<?> CategryListing() {
         var resp = webService.getFromCategory();
         return ResponseEntity.ok(resp);
     }
-    */
+    
     
 }

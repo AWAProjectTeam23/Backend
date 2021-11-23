@@ -1,5 +1,6 @@
 package com.example.restapi.services;
 
+import com.example.restapi.models.Category;
 import com.example.restapi.models.Menu;
 import com.example.restapi.models.RestaurantInfo;
 import com.example.restapi.repos.MenuRepo;
@@ -16,7 +17,7 @@ public class WebsiteService implements IWebsiteService{
 
     private List<RestaurantInfo> restaurantinfo;
     private List<Menu> menu;
-    private List<Menu> category;
+    private List<Category> bs;
 
     @Autowired
     private RestaurantInfoRepo RestaurantInfoRepo;
@@ -31,14 +32,17 @@ public class WebsiteService implements IWebsiteService{
     }
 
     @Override
-    public List<Menu> getMenu(){
-    menu = MenuRepo.getMenuInfo();
-    return menu;
+        public List<Menu> getMenu(){
+        menu = MenuRepo.getMenuInfo();
+        return menu;
     }
-    //@Override
-   // public List<Menu> getFromCategory(){
-   //     category =  MenuRepo.getCategoryInfo();
-    //    return category;
-  //  }
+
+
+    
+    @Override
+        public List<Category> getFromCategory(){
+        bs =  MenuRepo.getCategoryInfo();
+        return bs;
+    }
     
 }

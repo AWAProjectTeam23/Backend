@@ -1,5 +1,7 @@
 package com.example.restapi.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Generated;
@@ -27,44 +29,62 @@ public class Category {
     @Column(name = "categoryname")
     private String CategoryName;
 
-    @ManyToOne
-    private Category category;
 
-    @OneToMany
+
+    @ManyToOne
+    @JoinColumn(name = "menu_uuid")
+    private Menu menu;
+
+
+    @OneToMany(mappedBy = "menuitems")
+    private List<MenuItems> menuItemsList;
+
 
 
     public Category() {
     }
 
 
-    public Category(String Category_Id, String CategoryNaem, Menu menu) {
-        //this.Category_Id = Category_Id;
-        this.CategoryName = CategoryNaem;
-        this.menu = menu;
-    }
+    
 
-    /*public String getCategory_Id() {
+
+    public String getCategory_Id() {
         return this.Category_Id;
     }
 
     public void setCategory_Id(String Category_Id) {
         this.Category_Id = Category_Id;
     }
-*/
-    public String getCategoryNaem() {
+
+    public String getCategoryName() {
         return this.CategoryName;
     }
 
-    public void setCategoryNaem(String CategoryNaem) {
-        this.CategoryName = CategoryNaem;
+    public void setCategoryName(String CategoryName) {
+        this.CategoryName = CategoryName;
     }
-
+/*
     public Menu getMenu() {
         return this.menu;
     }
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public List<MenuItems> getMenuItemsList() {
+        return this.menuItemsList;
+    }
+
+    public void setMenuItemsList(List<MenuItems> menuItemsList) {
+        this.menuItemsList = menuItemsList;
+    }
+*/
+    public Category(String Category_Id, String CategoryName, Menu menu, List<MenuItems> menuItemsList) {
+        this.Category_Id = Category_Id;
+        this.CategoryName = CategoryName;
+        //this.menu = menu;
+       // this.menuItemsList = menuItemsList;
     }
     
 }
