@@ -1,7 +1,6 @@
 package com.example.restapi.api;
 
-import com.example.restapi.models.RestaurantInfo;
-import com.example.restapi.repos.RestaurantInfoRepo;
+import com.example.restapi.models.Orders;
 import com.example.restapi.services.WebsiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,12 @@ public class WebsiteController {
     @GetMapping("/")
     public ResponseEntity<?> RestaurantListing() {
         var result = webService.getRestaurants();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/OrderHistory")
+    public ResponseEntity<?> CustomerOrderHistory() {
+        List<Orders> result = webService.allCustomerOrders();
         return ResponseEntity.ok(result);
     }
 }
