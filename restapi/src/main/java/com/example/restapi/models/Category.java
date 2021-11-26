@@ -3,6 +3,7 @@ package com.example.restapi.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
@@ -16,6 +17,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.ManyToAny;
 
 @Entity
@@ -23,36 +27,28 @@ import org.hibernate.annotations.ManyToAny;
 public class Category {
     
     @Id
-    @Column(name = "category_uuid")
-    private String Category_Id;
+    @Column(name = "category_uuid", insertable = false, updatable =  false )
+    private UUID Category_Id;
 
     @Column(name = "categoryname")
     private String CategoryName;
 
 
-
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "menu_uuid")
-    private Menu menu;
+    public Menu menu;
 
 
-    @OneToMany(mappedBy = "menuitems")
-    private List<MenuItems> menuItemsList;
+    @OneToMany(mappedBy = "category")
+    @JsonManagedReference
+    public Set<MenuItems> menuItems;
 
-
-
-    public Category() {
-    }
-
-
-    
-
-
-    public String getCategory_Id() {
+    public UUID getCategory_Id() {
         return this.Category_Id;
     }
 
-    public void setCategory_Id(String Category_Id) {
+    public void setCategory_Id(UUID Category_Id) {
         this.Category_Id = Category_Id;
     }
 
@@ -63,28 +59,13 @@ public class Category {
     public void setCategoryName(String CategoryName) {
         this.CategoryName = CategoryName;
     }
-/*
-    public Menu getMenu() {
-        return this.menu;
-    }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public List<MenuItems> getMenuItemsList() {
-        return this.menuItemsList;
-    }
-
-    public void setMenuItemsList(List<MenuItems> menuItemsList) {
-        this.menuItemsList = menuItemsList;
-    }
-*/
-    public Category(String Category_Id, String CategoryName, Menu menu, List<MenuItems> menuItemsList) {
+    public Category(UUID Category_Id, String CategoryName) {
         this.Category_Id = Category_Id;
         this.CategoryName = CategoryName;
-        //this.menu = menu;
-       // this.menuItemsList = menuItemsList;
+    }
+
+    public Category() {
     }
     
 }

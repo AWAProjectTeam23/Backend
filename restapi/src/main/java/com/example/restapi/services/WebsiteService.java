@@ -1,5 +1,6 @@
 package com.example.restapi.services;
 
+import com.example.restapi.DTO.DtoMenu;
 import com.example.restapi.models.Category;
 import com.example.restapi.models.Menu;
 import com.example.restapi.models.RestaurantInfo;
@@ -11,13 +12,16 @@ import org.springframework.stereotype.Service;
 
 import javax.management.relation.Role;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class WebsiteService implements IWebsiteService{
 
     private List<RestaurantInfo> restaurantinfo;
     private List<Menu> menu;
-    private List<Category> bs;
+    private List<Menu> getMenuByParam;
+   
+  
 
     @Autowired
     private RestaurantInfoRepo RestaurantInfoRepo;
@@ -30,19 +34,18 @@ public class WebsiteService implements IWebsiteService{
         restaurantinfo = RestaurantInfoRepo.getRestaurantInfo();
         return restaurantinfo;
     }
+ 
 
+ 
     @Override
         public List<Menu> getMenu(){
         menu = MenuRepo.getMenuInfo();
         return menu;
     }
-
-
-    
     @Override
-        public List<Category> getFromCategory(){
-        bs =  MenuRepo.getCategoryInfo();
-        return bs;
+    public List<Menu> getMenuWithParm(UUID id) {
+        getMenuByParam = MenuRepo.getMenuById(id);
+        return getMenuByParam;
     }
-    
+
 }
