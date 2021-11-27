@@ -13,4 +13,6 @@ public interface IWebsiteService {
     List<?> allCustomerOrders(UUID id);
 
     List<?> allManagerOrders(UUID id);
+
+    void updateOrderStatus(Integer orderStatusCode, UUID order_id);
 }

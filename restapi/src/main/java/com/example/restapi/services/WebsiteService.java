@@ -32,4 +32,11 @@ public class WebsiteService implements IWebsiteService{
     public List<Orders> allManagerOrders(UUID id) {
         return ordersRepo.findManagerOrders(id);
     }
+
+    @Override
+    public void updateOrderStatus(Integer orderStatusCode, UUID order_id) {
+        ordersRepo.updateOrderStatus(orderStatusCode, order_id);
+    }
+
+
 }
