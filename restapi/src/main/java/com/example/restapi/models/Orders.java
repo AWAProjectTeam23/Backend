@@ -1,11 +1,13 @@
 package com.example.restapi.models;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,45 +22,58 @@ public class Orders {
     @Column(name = "totalprice")
     private String totalprice;
 
-    @JsonIgnore
     @Column(name = "orderstatus")
     private Integer orderstatus;
 
     @Column(name = "completion_ts")
-    private String completionTime;
+    private String completionTimeStamp;
 
     @OneToMany(mappedBy = "orders")
     @JsonManagedReference
     public Set<OrderProducts> orderproducts;
 
+    @ManyToOne
+    @JsonManagedReference
+    @JsonIgnore
+    @JoinColumn(name = "restaurant_uuid")
+    public RestaurantInfo restaurantinfo;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JsonIgnore
+    @JoinColumn(name = "customer_uuid")
+    public UserInfo userinfo;
+
 
 
     public Orders () {}
 
-    public Orders (UUID order_id, String totalprice, Integer orderstatus, String completionTime) {
+    public Orders (UUID order_id, String totalprice, Integer orderstatus, String completionTimeStamp) {
        this.order_id = order_id;
        this.totalprice = totalprice;
        this.orderstatus = orderstatus;
-       this.completionTime = completionTime;
+       this.completionTimeStamp = completionTimeStamp;
     }
 
     public UUID getOrder_id() {
         return order_id;
     }
 
-    public String getTotalprice() {
+    public String getTotal_price() {
         return totalprice;
     }
 
-    public Integer getOrderstatus() {
+    public Integer getOrder_status() {
         return orderstatus;
     }
 
     public String getCompletionTime() {
-        return completionTime;
+        return completionTimeStamp;
     }
 
-    //public Set<OrderProducts> getOrderproducts() {
-        //return orderproducts;
-    //}
+    public String getRestaurantName() {
+        return restaurantinfo.getRestaurantName();
+    }
+
+    public String getCustomerName() { return userinfo.getUsername(); }
 }

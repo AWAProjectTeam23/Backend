@@ -1,10 +1,15 @@
 package com.example.restapi.models;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "restaurantinfo")
@@ -12,7 +17,7 @@ public class RestaurantInfo {
 
     @Id
     @Column(name = "restaurant_uuid")
-    private String restaurantId;
+    private UUID restaurantId;
 
     @Column(name = "restaurantmanager_uuid")
     private String restaurantManagerUserId;
@@ -38,10 +43,14 @@ public class RestaurantInfo {
     @Column(name = "pricelevel")
     private String priceLevel;
 
+    @OneToMany(mappedBy = "restaurantinfo")
+    @JsonBackReference
+    public Set<Orders> Orders;
+
 
     public RestaurantInfo() {}
 
-    public RestaurantInfo(String restaurantId, String restaurantManagerUserId, String restaurantName, String address,
+    public RestaurantInfo(UUID restaurantId, String restaurantManagerUserId, String restaurantName, String address,
                           String open_hour, String closing_hour, String imageURL, String restaurantStyle, String priceLevel)
     {
         this.restaurantId = restaurantId;
@@ -55,7 +64,7 @@ public class RestaurantInfo {
         this.priceLevel = priceLevel;
     }
 
-    public String getRestaurantId() {
+    public UUID getRestaurantId() {
         return restaurantId;
     }
 

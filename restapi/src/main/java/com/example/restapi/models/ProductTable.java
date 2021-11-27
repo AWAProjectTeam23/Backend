@@ -12,11 +12,12 @@ import java.util.Set;
 public class ProductTable {
 
     @Id
+    @JsonIgnore
     @Column(name = "item_uuid")
     private String item_id;
 
     @Column(name = "productname")
-    private String name;
+    private String productName;
 
     @JsonIgnore
     @Column(name = "price")
@@ -27,15 +28,14 @@ public class ProductTable {
     private String image;
 
     @OneToMany(mappedBy = "productTable")
-    //@JsonIgnore
     @JsonBackReference
     public Set<OrderProducts> orderProducts;
 
     public ProductTable() {}
 
-    public ProductTable(String item_id, String name, String priceper, String image) {
+    public ProductTable(String item_id, String productName, String priceper, String image) {
         this.item_id = item_id;
-        this.name = name;
+        this.productName = productName;
         this.priceper = priceper;
         this.image = image;
     }
@@ -45,7 +45,7 @@ public class ProductTable {
     }
 
     public String getName() {
-        return name;
+        return productName;
     }
 
     public String getPriceper() {

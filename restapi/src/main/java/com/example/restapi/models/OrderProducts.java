@@ -12,8 +12,14 @@ import java.util.UUID;
 public class OrderProducts {
 
     @Id
+    @JsonIgnore
     @Column(name = "orderitem_uuid")
     private UUID orderItem_id;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "product_uuid")
+    private ProductTable productTable;
 
     @Column(name = "quantity")
     private Integer productQuantity;
@@ -23,10 +29,6 @@ public class OrderProducts {
     @JoinColumn(name = "order_uuid")
     public Orders orders;
 
-    @ManyToOne
-    @JsonManagedReference
-    @JoinColumn(name = "product_uuid")
-    private ProductTable productTable;
 
 
 

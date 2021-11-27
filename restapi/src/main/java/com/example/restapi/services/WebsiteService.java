@@ -1,19 +1,16 @@
 package com.example.restapi.services;
 
-import com.example.restapi.models.Orders;
-import com.example.restapi.models.RestaurantInfo;
+import com.example.restapi.models.*;
 import com.example.restapi.repos.OrdersRepo;
 import com.example.restapi.repos.RestaurantInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class WebsiteService implements IWebsiteService{
 
-    private List<RestaurantInfo> restaurantinfo;
-    private List<Orders> customerOrders;
 
     @Autowired
     private RestaurantInfoRepo restaurantInfoRepo;
@@ -23,13 +20,16 @@ public class WebsiteService implements IWebsiteService{
 
     @Override
     public List<RestaurantInfo> getRestaurants() {
-        restaurantinfo = restaurantInfoRepo.findAll();
-        return restaurantinfo;
+        return restaurantInfoRepo.findAll();
     }
 
     @Override
-    public List<Orders> allCustomerOrders() {
-        customerOrders = ordersRepo.findByOrderNcustomerId();
-        return customerOrders;
+    public List<Orders> allCustomerOrders(UUID customerID) {
+        return ordersRepo.findCustomerOrders(customerID);
+    }
+
+    @Override
+    public List<Orders> allManagerOrders(UUID id) {
+        return ordersRepo.findManagerOrders(id);
     }
 }
