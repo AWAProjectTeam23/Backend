@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,4 +42,25 @@ public class WebsiteController {
         webService.updateOrderStatus(newOrderStatus, order_id);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/Manager/CreateRestaurant")
+    public ResponseEntity<?> CreateRestaurant(@RequestBody Map<String, String> body) {
+        if(body == null) {
+            return ResponseEntity.badRequest()
+                    .body("Invalid restaurantinformation" + body);
+        }
+
+        var success = webService.storeRestaurantInfo(body);
+
+        if(!success) {
+            return ResponseEntity.badRequest()
+                    .body("Failed to create a new restaurant:" + body.get("restaurantname"));
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/CreateAccount")
+    public ResponseEntity<?> CreateAccount()
+    {return null;}
 }
