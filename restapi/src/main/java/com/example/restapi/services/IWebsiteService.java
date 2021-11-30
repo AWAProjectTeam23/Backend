@@ -19,4 +19,8 @@ public interface IWebsiteService {
     void updateOrderStatus(Integer orderStatusCode, UUID order_id);
 
     boolean storeRestaurantInfo(Map<String, String> body);
+
+    boolean storeAccountInfo(Map<String, String> body);
+
+    List<?> getUsers();
 }

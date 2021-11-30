@@ -23,7 +23,8 @@ public class UserInfo {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "userinfo")
     @JsonBackReference
@@ -32,7 +33,7 @@ public class UserInfo {
 
     public UserInfo() {}
 
-    public UserInfo(UUID user_id, String username, String password, String role) {
+    public UserInfo(UUID user_id, String username, String password, Role role) {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
@@ -42,4 +43,8 @@ public class UserInfo {
     public String getUsername() {
         return username;
     }
+
+    public Role getRole() { return role; }
+
+    public String getPassword() { return password; }
 }

@@ -2,11 +2,16 @@ package com.example.restapi.api;
 
 import com.example.restapi.models.Orders;
 import com.example.restapi.models.RestaurantInfo;
+import com.example.restapi.models.UserInfo;
+import com.example.restapi.repos.UserRepo;
+import com.example.restapi.security.PasswordEncoder;
 import com.example.restapi.services.WebsiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.sql.Time;
 import java.util.Map;
 import java.util.UUID;
@@ -17,19 +22,40 @@ public class WebsiteController {
     @Autowired
     private WebsiteService webService;
 
-    @GetMapping("/")
-    public ResponseEntity<?> RestaurantListing() {
-        var result = webService.getRestaurants();
-        return ResponseEntity.ok(result);
+    @Autowired
+    UserRepo userRepo;
+
+
+    @GetMapping("/admin")
+    public ResponseEntity<?> adminTestPage() {
+        String adminpage = "admin page";
+        return ResponseEntity.ok(adminpage);
     }
 
-    @GetMapping("/OrderHistory/{id}")
+    @GetMapping("/customer")
+    public ResponseEntity<?> customerTestPage() {
+
+        //USER INFORMATION
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String adminpage = "customer page";
+        return ResponseEntity.ok(adminpage+username);
+    }
+
+    @GetMapping("/public")
+    public ResponseEntity<?> RestaurantListing() {
+        var result = webService.getRestaurants();
+        var ersrsr = webService.getUsers();
+        return ResponseEntity.ok(ersrsr);
+    }
+
+    @GetMapping("/customer/OrderHistory/{id}")
     public ResponseEntity<?> CustomerOrderHistory(@PathVariable UUID id) {
         var customerOrders = webService.allCustomerOrders(id);
         return ResponseEntity.ok(customerOrders);
     }
 
-    @GetMapping("/ManagerOrderHistory/{restaurant_id}")
+    @GetMapping("/manager/OrderHistory/{restaurant_id}")
     public ResponseEntity<?> ManagerOrderHistory(@PathVariable UUID restaurant_id) {
         var managerOrders = webService.allManagerOrders(restaurant_id);
         return ResponseEntity.ok(managerOrders);
@@ -60,7 +86,20 @@ public class WebsiteController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/CreateAccount")
-    public ResponseEntity<?> CreateAccount()
-    {return null;}
+    @PostMapping("/public/CreateAccount")
+    public ResponseEntity<?> CreateAccount(@RequestBody Map<String, String> body) {
+        if(body == null) {
+            return ResponseEntity.badRequest()
+                    .body("Invalid accountInfo" + body);
+        }
+
+        var success = webService.storeAccountInfo(body);
+
+        if(!success) {
+            return ResponseEntity.badRequest()
+                    .body("Failed to create a new account:" + body.get("username"));
+        }
+
+        return ResponseEntity.ok().build();
+    }
 }

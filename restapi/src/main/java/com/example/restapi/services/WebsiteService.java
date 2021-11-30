@@ -3,6 +3,8 @@ package com.example.restapi.services;
 import com.example.restapi.models.*;
 import com.example.restapi.repos.OrdersRepo;
 import com.example.restapi.repos.RestaurantInfoRepo;
+import com.example.restapi.repos.UserRepo;
+import com.example.restapi.security.PasswordEncoder;
 import org.hibernate.QueryParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,12 @@ public class WebsiteService implements IWebsiteService{
 
     @Autowired
     private OrdersRepo ordersRepo;
+
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    PasswordEncoder pwEncoder;
 
     @Override
     public List<RestaurantInfo> getRestaurants() {
@@ -59,5 +67,25 @@ public class WebsiteService implements IWebsiteService{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean storeAccountInfo(Map<String, String> body) {
+        var username = body.get("username");
+        var password = pwEncoder.encode(body.get("password"));
+        var role = body.get("role");
+
+        try {
+            userRepo.insertNewAccount(username, password, role);
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<?> getUsers() {
+        return userRepo.findAll();
     }
 }
