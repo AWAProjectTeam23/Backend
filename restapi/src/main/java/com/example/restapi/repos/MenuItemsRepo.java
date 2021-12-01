@@ -35,10 +35,7 @@ public interface MenuItemsRepo extends JpaRepository<MenuItems, String> {
                    void addNewMenuItemsList(@Param("category_id")UUID category_id,
                                             @Param("item_id")UUID item_id); 
     
-/*@Transactional
-    @Modifying
-    @Query(value = "INSERT INTO menuitems (item_uuid) SELECT item_uuid FROM menuitems ",  nativeQuery = true)
-    void modifyItemID();                                            
-          */
+
+   
                                             
 }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.UUIDEditor;
 import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.yaml.snakeyaml.tokens.ValueToken;
 
 import javax.management.relation.Role;
@@ -30,6 +31,7 @@ public class WebsiteService implements IWebsiteService{
     private List<RestaurantInfo> restaurantinfo;
     private List<Menu> menu;
     private List<Category> cat;
+    private List<ProductTable> asd;
     //private List<Menu> getMenuByParam;
 
     
@@ -100,17 +102,22 @@ public class WebsiteService implements IWebsiteService{
      
 
 
+
+
+
+
+
      @Override
      public boolean addingProductsToMenu(Map<String, String>body) {
-        var item_id = UUID.fromString(body.get("item_id"));
+        var item_id =UUID.fromString(body.get(asd));
         var category_id = UUID.fromString(body.get("category_id"));
         //var menuItemList_id = UUID.fromString(body.get("menuItemList_id"));
-         var productName = body.get("productName");
-         var price = body.get("price");
-         var imageURL = body.get("imageURL");
+        // var productName = body.get("productName");
+        // var price = body.get("price");
+        // var imageurl = body.get("imageurl");
          try {
-           // productTableRepo.insertToProductable(productName, price, imageURL);
-           // menuItemsRepo.modifyItemID();
+            //productTableRepo.insertToProductable(productName, price, imageurl);
+           
             menuItemsRepo.addNewMenuItemsList(category_id, item_id);
 
          } catch (Exception e) {

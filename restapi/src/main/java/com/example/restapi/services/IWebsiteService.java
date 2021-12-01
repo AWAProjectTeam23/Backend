@@ -18,13 +18,15 @@ public interface IWebsiteService {
     List<RestaurantInfo> getRestaurants();
     List<Menu> getMenu();
     List<Category> getCategory();
+    
     List<?> getMenuWithParm(UUID id);
+    //List<ProductTable> getItemID();
     //List<ProductTable> getIdByName(String productName);
     //boolean addProductToMenu(Map<String, String> body);
     boolean addNewCategory(Map<String, String> body);
     boolean addMenuToResta(Map<String, String>body);
-   // boolean addMenuItemsListTo(Map<String, String>body);
-   // boolean addNewProductToCat(Map<String, String>body);
+    //boolean addMenuItemsListTo(Map<String, String>body);
+    //boolean addNewProductToCat(Map<String, String>body);
     boolean addingProductsToMenu(Map<String, String>body);
    // void asdasd();
 }
