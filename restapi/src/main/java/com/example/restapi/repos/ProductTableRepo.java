@@ -15,44 +15,6 @@ import org.springframework.data.repository.query.Param;
 public interface  ProductTableRepo extends JpaRepository<ProductTable, String>{
 
 
-    //new item
-  /*  @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO productable"+
-                "( "+
-                "item_id, "+
-                "productname, "+
-                 "price, "+
-                 "imgurl, "+
-                 "menuitems.menuitems_uuid, "+
-                 "category.category_uuid "+
-                    " ) " +
-
-                        "FULL OUTER JOIN "+
-                         "productable.item_uuid "+ 
-                         "ON menuitems.item_uuid "+
-                         "menuitems.category_uuid ON"+
-                         "category.category_uuid"+
-                         "VALUES "+ 
-
-                      "( "+
-                          "uuid_generate_v4(), "+
-                          ":productName , "+ 
-                          ":price, "+
-                          ":imgURL, "+
-                          ":restaurantName, "+
-                          ":menuItemList_id, "+
-                          ":caegory_id "+
-                      " )" , nativeQuery = true)
-
-                    void addProductsUsingCategory(@Param("productName") String productName,
-                                                    @Param("price") String price,
-                                                    @Param("imgURL") String imgURL, 
-                                                    @Param("restaurantName") String restaurantName,
-                                                    @Param("menuItemsList_id") UUID menuItemsList_id,
-                                                    @Param("category_id") UUID category_id);
-*/                                                   
-
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO producttable"+
@@ -60,24 +22,29 @@ public interface  ProductTableRepo extends JpaRepository<ProductTable, String>{
     "item_uuid, "+
     "productname, "+
     "price, "+
-    "ImageURL "+
+    "imageurl, "+
+    "product_description, "+
+    "category_uuid "+
     " ) "+
         "VALUES "+
             " ( "+
             "uuid_generate_v4(), "+
-            ":productname, "+
+            ":productName, "+
             ":price, "+
-            ":imageURL "+
+            ":imageurl, "+
+            ":product_description, "+
+            ":category_id "+
             ")" , nativeQuery = true)
 
-            void insertToProductable(@Param("productname") String productName, 
+            void insertNewProduct (@Param("productName") String productName, 
                                      @Param("price") String price,
-                                     @Param("imageURL") String imageURL);
+                                     @Param("imageurl") String imageurl,
+                                     @Param("product_description") String product_description,
+                                     @Param("category_id") UUID category_id
+                                     );
 
 
-    
-    @Query(value = "SELECT item_uuid FROM producttable "+ 
-                    "WHERE producttable.productname= :productName", nativeQuery = true )
-                List<ProductTable> getIdBuffer(@Param("productName") String productName);
+
 
    }
+ 

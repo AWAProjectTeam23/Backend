@@ -27,8 +27,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import antlr.collections.List;
 
-//owning side
-
 
 @Entity
 @Table(name = "producttable")
@@ -46,11 +44,21 @@ public class ProductTable {
 
     @Column(name = "imageurl")
     private String ImageURL;
+
+    @Column(name = "productdescription")
+    private String productDescription;
+
     
-    
-   @OneToOne(mappedBy =  "productTable")
-   @JsonBackReference
-   public MenuItems menuItems; 
+   @ManyToOne
+   @JsonBackReference 
+   @JoinColumn(name = "category_uuid")
+   public Category category;
+  
+   /* FOR FUTURE
+  @OneToMany(mappedBy =  "producttable")
+  @JsonManagedReference
+  public Set<OrderProducts> OrderProducts;
+  */
   
     public ProductTable() {
     }

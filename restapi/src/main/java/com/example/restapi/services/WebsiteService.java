@@ -6,7 +6,6 @@ import com.example.restapi.models.Menu;
 import com.example.restapi.models.ProductTable;
 import com.example.restapi.models.RestaurantInfo;
 import com.example.restapi.repos.CategoryRepo;
-import com.example.restapi.repos.MenuItemsRepo;
 import com.example.restapi.repos.MenuRepo;
 import com.example.restapi.repos.ProductTableRepo;
 import com.example.restapi.repos.RestaurantInfoRepo;
@@ -31,15 +30,11 @@ public class WebsiteService implements IWebsiteService{
     private List<RestaurantInfo> restaurantinfo;
     private List<Menu> menu;
     private List<Category> cat;
-    private List<ProductTable> asd;
     //private List<Menu> getMenuByParam;
 
     
     @Autowired
     private ProductTableRepo productTableRepo;
-
-    @Autowired
-    private MenuItemsRepo menuItemsRepo;
 
     @Autowired
     private CategoryRepo categoryRepo;
@@ -68,7 +63,13 @@ public class WebsiteService implements IWebsiteService{
         return menu;
     }
 
-    
+
+
+
+
+
+
+//Get menu with restaurant UUID  
     @Override
     public List<Menu> getMenuWithParm(UUID id) {
         return menuRepo.getMenuById(id);
@@ -87,7 +88,7 @@ public class WebsiteService implements IWebsiteService{
         }
         return true;
     }
-    //ADd new category
+//Add new category
      @Override
      public boolean addNewCategory(Map<String, String> body) {
          var categoryName = body.get("categoryName");
@@ -99,48 +100,26 @@ public class WebsiteService implements IWebsiteService{
          }
          return true;
      }
+   
      
 
-
-
-
-
-
+//Create new menu item
 
      @Override
-     public boolean addingProductsToMenu(Map<String, String>body) {
-        var item_id =UUID.fromString(body.get(asd));
-        var category_id = UUID.fromString(body.get("category_id"));
-        //var menuItemList_id = UUID.fromString(body.get("menuItemList_id"));
-        // var productName = body.get("productName");
-        // var price = body.get("price");
-        // var imageurl = body.get("imageurl");
-         try {
-            //productTableRepo.insertToProductable(productName, price, imageurl);
-           
-            menuItemsRepo.addNewMenuItemsList(category_id, item_id);
+   public boolean addNewProduct(Map<String, String>body) {
+       var productName = body.get("productName");
+       var price = body.get("price");
+       var imageurl = body.get("imageurl");
+       var product_description = body.get("product_description");
+       var category_id = UUID.fromString(body.get("category_id"));
 
-         } catch (Exception e) {
-             return false;
-         }
-         return true;
-     }
+       try {
+           productTableRepo.insertNewProduct(productName, price, imageurl, product_description, category_id);
+       } catch (Exception e) {
+           return false;
+       }
+       return true;
 
-
-
-
-     /*
-     //MenuItemsList
-     @Override
-     public boolean addMenuItemsListTo(Map<String, String> body){
-         var category_id = UUID.fromString(body.get("category_id"));
-         var item_id = UUID.fromString(body.get("item_id"));
-         try {
-             menuItemsRepo.addNewMenuItemsList(category_id, item_id);
-         } catch (Exception e) {
-             return false;
-         }
-         return true;
-     }*/
+   }
 
 }

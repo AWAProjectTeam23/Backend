@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import net.bytebuddy.asm.Advice.Return;
 
@@ -54,24 +55,7 @@ public class WebsiteController {
        var resp = webService.getMenuWithParm(id);
        return ResponseEntity.ok(resp);
    }
-    
-   /*@PostMapping("/Manager/addProducts")
-   public ResponseEntity<?> addProducts(@RequestBody Map<String, String> body){
-        if(body == null) {
-            return ResponseEntity.badRequest()
-            .body("Check your information");
 
-        }
-
-        var working = webService.addProductToMenu(body);
-
-        if(!working) {
-            return ResponseEntity.badRequest()
-            .body("FAiled to add new product");
-        }
-
-        return ResponseEntity.ok().build();
-   }*/ 
 
    //For creating a new category
    @PostMapping("/Manager/addCategory")
@@ -113,21 +97,20 @@ public class WebsiteController {
     
     }
     
-    //Adding products to db with two repos
-    @PostMapping("/Manager/addProducts")
-    public ResponseEntity<?> addingProductsToDb(@RequestBody Map<String, String> body) {
+    //For adding a new product to menu 
+    @PostMapping("/Manager/addNewProduct")
+    public ResponseEntity<?> addNewProduct(@RequestBody Map<String, String> body ){
         if(body == null) {
             return ResponseEntity.badRequest()
-            .body("Check your data");
+            .body("Not valid data");
         }
-
-        var success = webService.addingProductsToMenu(body);
+        
+        var success = webService.addNewProduct(body);
 
         if(!success) {
             return ResponseEntity.badRequest()
-            .body("Oops! something went wrong");
+            .body("Oops something went wrong!!!");
         }
-
         return ResponseEntity.ok().build();
     }
 
