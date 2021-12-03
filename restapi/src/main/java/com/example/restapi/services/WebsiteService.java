@@ -2,11 +2,9 @@ package com.example.restapi.services;
 
 import com.example.restapi.models.Category;
 import com.example.restapi.models.Menu;
-import com.example.restapi.models.RestaurantInfo;
 import com.example.restapi.repos.CategoryRepo;
 import com.example.restapi.repos.MenuRepo;
 import com.example.restapi.repos.ProductTableRepo;
-import com.example.restapi.repos.RestaurantInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.UUID;
 public class WebsiteService implements IWebsiteService{
   
     //Used to cet extra info not important for final product
-    private List<RestaurantInfo> restaurantinfo;
     private List<Menu> menu;
     private List<Category> cat;
 
@@ -28,19 +25,12 @@ public class WebsiteService implements IWebsiteService{
     @Autowired
     private CategoryRepo categoryRepo;
 
-    @Autowired
-    private RestaurantInfoRepo RestaurantInfoRepo;
 
     @Autowired
     private MenuRepo menuRepo;
 
 
     //Some basic functions for getting extra information  not important for final product
-    @Override
-    public List<RestaurantInfo> getRestaurants() {
-        restaurantinfo = RestaurantInfoRepo.getRestaurantInfo();
-        return restaurantinfo;
-    }
  
     @Override
     public List<Category> getCategory() {

@@ -20,11 +20,6 @@ public class WebsiteController {
 
 
     //Some mappingfor extra information
-    @GetMapping("/")
-    public ResponseEntity<?> RestaurantListing() {
-        var result = webService.getRestaurants();
-        return ResponseEntity.ok(result);
-    }
     @GetMapping("/allCat")
     public ResponseEntity<?> CatListing(){
         var result = webService.getCategory();

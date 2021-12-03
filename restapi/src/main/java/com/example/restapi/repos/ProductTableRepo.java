@@ -3,13 +3,13 @@ package com.example.restapi.repos;
 
 import java.util.UUID;
 import javax.transaction.Transactional;
-import com.example.restapi.models.ProductTable;
+import com.example.restapi.models.MenuProductTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface  ProductTableRepo extends JpaRepository<ProductTable, String>{
+public interface  ProductTableRepo extends JpaRepository<MenuProductTable, String>{
 
    
 

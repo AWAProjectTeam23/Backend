@@ -39,7 +39,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     @JsonManagedReference
-    private Set<ProductTable> productTable;
+    private Set<MenuProductTable> productTable;
 
     public UUID getCategory_Id() {
         return this.Category_Id;

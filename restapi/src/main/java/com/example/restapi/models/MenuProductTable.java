@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "producttable")
 
   
-public class ProductTable {
+public class MenuProductTable {
     @Id
     @Column(name = "item_uuid")
     private UUID Item_Id;
@@ -43,10 +43,10 @@ public class ProductTable {
   public Set<OrderProducts> OrderProducts;
   */
   
-    public ProductTable() {
+    public MenuProductTable() {
     }
 
-    public ProductTable(UUID Item_Id, String productDescription, String ProductName, String PricePer, String ImageURL) {
+    public MenuProductTable(UUID Item_Id, String productDescription, String ProductName, String PricePer, String ImageURL) {
         this.Item_Id = Item_Id;
         this.ProductName = ProductName;
         this.PricePer = PricePer;
