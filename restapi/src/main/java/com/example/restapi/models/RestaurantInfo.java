@@ -4,16 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.List;
-
+//This one is just for my local testing, real and better one is made by Antero
 @Entity
 @Table(name = "restaurantinfo")
 public class RestaurantInfo {
     @Id
     @Column(name = "restaurant_uuid")
     private String restaurantId;
-    //private String restaurantManagerUserId;
 
     @Column(name = "restaurantname")
     private String restaurantName;
@@ -67,7 +64,6 @@ public class RestaurantInfo {
                           String open_hour, String closing_hour, String imageURL, String restaurantStyle, String priceLevel)
     {
         this.restaurantId = restaurantId;
-        //this.restaurantManagerUserId = restaurantManagerUserId;
         this.restaurantName = restaurantName;
         this.address = address;
         this.open_hour = open_hour;
