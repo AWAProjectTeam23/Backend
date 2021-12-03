@@ -47,4 +47,8 @@ public class UserInfo {
     public Role getRole() { return role; }
 
     public String getPassword() { return password; }
+
+    public UUID getUser_id() {
+        return user_id;
+    }
 }

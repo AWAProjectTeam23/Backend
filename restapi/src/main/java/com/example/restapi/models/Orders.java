@@ -1,13 +1,10 @@
 package com.example.restapi.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Formula;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,7 +27,8 @@ public class Orders {
 
     @OneToMany(mappedBy = "orders")
     @JsonManagedReference
-    public Set<OrderProducts> orderproducts;
+    @JsonView(View.Orders.class)
+    public Set<OrderProductsTable> orderproducts;
 
     @ManyToOne
     @JsonManagedReference
@@ -44,9 +42,8 @@ public class Orders {
     @JoinColumn(name = "customer_uuid")
     public UserInfo userinfo;
 
-
-
-    public Orders () {}
+    public Orders() {
+    }
 
     public Orders (UUID order_id, String totalprice, Integer orderstatus, String completionTimeStamp) {
        this.order_id = order_id;
@@ -55,25 +52,39 @@ public class Orders {
        this.completionTimeStamp = completionTimeStamp;
     }
 
+    @JsonView(View.Orders.class)
     public UUID getOrder_id() {
         return order_id;
     }
 
+    @JsonView(View.Orders.class)
     public String getTotal_price() {
         return totalprice;
     }
 
+    @JsonView(View.Orders.class)
     public Integer getOrder_status() {
         return orderstatus;
     }
 
+    @JsonView(View.Orders.class)
     public String getCompletionTime() {
         return completionTimeStamp;
     }
 
+    @JsonView(View.OrdersWithRestaurantName.class)
     public String getRestaurantName() {
         return restaurantinfo.getRestaurantName();
     }
 
+    @JsonView(View.Orders.class)
+    public UUID getRestaurantID() {
+        return restaurantinfo.getRestaurantId();
+    }
+
+    @JsonView(View.OrdersWithCustomerName.class)
     public String getCustomerName() { return userinfo.getUsername(); }
+
+    @JsonView(View.Orders.class)
+    public UUID getCustomerID() { return userinfo.getUser_id(); }
 }

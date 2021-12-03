@@ -18,7 +18,6 @@ public class Menu {
     @Column(name = "restaurant_Id")
     private Long Restaurant_Id;
 
-
     public Menu(Long Menu_Id, Long Restaurant_Id) {
         this.Menu_Id = Menu_Id;
         this.Restaurant_Id = Restaurant_Id;

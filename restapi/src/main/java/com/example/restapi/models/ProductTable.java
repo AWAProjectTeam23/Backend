@@ -2,10 +2,10 @@ package com.example.restapi.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "producttable")
@@ -14,14 +14,14 @@ public class ProductTable {
     @Id
     @JsonIgnore
     @Column(name = "item_uuid")
-    private String item_id;
+    private UUID item_id;
 
     @Column(name = "productname")
     private String productName;
 
     @JsonIgnore
     @Column(name = "price")
-    private String priceper;
+    private String pricePer;
 
     @JsonIgnore     //REMOVE LATER
     @Column(name = "imageurl")
@@ -29,18 +29,18 @@ public class ProductTable {
 
     @OneToMany(mappedBy = "productTable")
     @JsonBackReference
-    public Set<OrderProducts> orderProducts;
+    public Set<OrderProductsTable> orderProducts;
 
     public ProductTable() {}
 
-    public ProductTable(String item_id, String productName, String priceper, String image) {
+    public ProductTable(UUID item_id, String productName, String pricePer, String image) {
         this.item_id = item_id;
         this.productName = productName;
-        this.priceper = priceper;
+        this.pricePer = pricePer;
         this.image = image;
     }
 
-    public String getItem_id() {
+    public UUID getItem_id() {
         return item_id;
     }
 
@@ -48,15 +48,11 @@ public class ProductTable {
         return productName;
     }
 
-    public String getPriceper() {
-        return priceper;
+    public String getPricePer() {
+        return pricePer;
     }
 
     public String getImage() {
         return image;
     }
-
-    //public Set<OrderProducts> getOrderProducts() {
-     //   return orderProducts;
-    //}
 }

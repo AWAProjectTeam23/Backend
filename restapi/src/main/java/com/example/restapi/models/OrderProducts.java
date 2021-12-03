@@ -1,55 +1,24 @@
 package com.example.restapi.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
-@Table(name = "orderproducts")
 public class OrderProducts {
-
-    @Id
-    @JsonIgnore
-    @Column(name = "orderitem_uuid")
-    private UUID orderItem_id;
-
-    @ManyToOne
-    @JsonManagedReference
-    @JoinColumn(name = "product_uuid")
-    private ProductTable productTable;
-
-    @Column(name = "quantity")
+    private UUID order_uuid;
+    private String product_uuid;
     private Integer productQuantity;
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "order_uuid")
-    public Orders orders;
-
-
-
-
-
-
-    public OrderProducts() {}
-
-    public OrderProducts(UUID orderItem_id, Integer productQuantity, ProductTable productTable, Orders orders) {
-        this.orderItem_id = orderItem_id;
+    public OrderProducts(UUID order_uuid, String product_uuid, Integer productQuantity) {
+        this.order_uuid = order_uuid;
+        this.product_uuid = product_uuid;
         this.productQuantity = productQuantity;
-        //this.productTable = productTable;
-        //this.orders = orders;
     }
+    public UUID getOrder_uuid() { return order_uuid; }
 
-    public UUID getOrderItem_id() {
-        return orderItem_id;
+    public String getProduct_uuid() {
+        return product_uuid;
     }
 
     public Integer getProductQuantity() {
         return productQuantity;
     }
-
-
 }

@@ -5,12 +5,12 @@ import com.example.restapi.repos.OrdersRepo;
 import com.example.restapi.repos.RestaurantInfoRepo;
 import com.example.restapi.repos.UserRepo;
 import com.example.restapi.security.PasswordEncoder;
-import org.hibernate.QueryParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class WebsiteService implements IWebsiteService{
@@ -29,9 +29,37 @@ public class WebsiteService implements IWebsiteService{
     PasswordEncoder pwEncoder;
 
     @Override
-    public List<RestaurantInfo> getRestaurants() {
-        return restaurantInfoRepo.findAll();
+    public List<RestaurantInfo> getRestaurants() { return restaurantInfoRepo.findAll(); }
+
+    @Override
+    public List<?> getRestaurantsOfManager(UUID manager_id) {
+        var restaurantsOfManager = restaurantInfoRepo.findAll()
+                .stream()
+                .filter(r -> r.getRestaurantManagerUserId().equals(manager_id))
+                .collect(Collectors.toList());
+
+        return restaurantsOfManager;
     }
+
+    @Override
+    public boolean storeOrderInfo(NewOrders body) {
+        var order_id = ordersRepo.insertOrder(UUID.fromString(body.getCustomer_uuid()),
+                UUID.fromString(body.getRestaurant_uuid()),
+                body.getTotalPrice());
+        var orderProducts = body.getOrderProducts();
+        for (int i = 0; i < orderProducts.size(); i++) {
+            var product_id = orderProducts.get(i).getProduct_uuid();
+            var productQuantity = orderProducts.get(i).getProductQuantity();
+            try {
+                ordersRepo.insertOrderProducts(order_id, UUID.fromString(product_id), productQuantity);
+            } catch (Exception e) {
+                ordersRepo.deleteById(order_id.toString());
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     @Override
     public List<Orders> allCustomerOrders(UUID customerID) {
@@ -44,24 +72,29 @@ public class WebsiteService implements IWebsiteService{
     }
 
     @Override
-    public void updateOrderStatus(Integer orderStatusCode, UUID order_id) {
-        ordersRepo.updateOrderStatus(orderStatusCode, order_id);
+    public boolean updateOrderStatus(Map<String, String> body) {
+        try {
+            ordersRepo.updateOrderStatus(Integer.parseInt(body.get("orderStatusCode")),
+                                        UUID.fromString(body.get("order_id")));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean storeRestaurantInfo(Map<String, String> body)
+    public boolean storeRestaurantInfo(RestaurantModel model, String imageURL)
     {
-        var name = body.get("restaurantname");
-        var address = body.get("address");
-        var open = Time.valueOf(body.get("open_hour"));
-        var closing = Time.valueOf(body.get("closing_hour"));
-        var image = body.get("imageURL");
-        var type = body.get("restauranttype");
-        var priceLevel = Integer.parseInt(body.get("pricelevel"));
-        var manager_id = UUID.fromString(body.get("user_id"));
+        var name = model.getRestaurantName();
+        var address = model.getAddress();
+        var open = Time.valueOf(model.getOpen_hour());
+        var closing = Time.valueOf(model.getClosing_hour());
+        var type = model.getStyle();
+        var priceLevel = Integer.parseInt(model.getPriceLevel());
+        var manager_id = UUID.fromString(model.getManager_id());
 
         try {
-            restaurantInfoRepo.insertNewRestaurant(name, address, open, closing, image, type, priceLevel, manager_id);
+            restaurantInfoRepo.insertNewRestaurant(name, address, open, closing, imageURL, type, priceLevel, manager_id);
         }
         catch (Exception e) {
             return false;

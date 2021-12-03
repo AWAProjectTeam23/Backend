@@ -1,13 +1,7 @@
 package com.example.restapi.models;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,7 +14,7 @@ public class RestaurantInfo {
     private UUID restaurantId;
 
     @Column(name = "restaurantmanager_uuid")
-    private String restaurantManagerUserId;
+    private UUID restaurantManagerUserId;
 
     @Column(name = "restaurantname")
     private String restaurantName;
@@ -47,10 +41,9 @@ public class RestaurantInfo {
     @JsonBackReference
     public Set<Orders> Orders;
 
-
     public RestaurantInfo() {}
 
-    public RestaurantInfo(UUID restaurantId, String restaurantManagerUserId, String restaurantName, String address,
+    public RestaurantInfo(UUID restaurantId, UUID restaurantManagerUserId, String restaurantName, String address,
                           String open_hour, String closing_hour, String imageURL, String restaurantStyle, String priceLevel)
     {
         this.restaurantId = restaurantId;
@@ -68,7 +61,7 @@ public class RestaurantInfo {
         return restaurantId;
     }
 
-    public String getRestaurantManagerUserId() {
+    public UUID getRestaurantManagerUserId() {
         return restaurantManagerUserId;
     }
 
