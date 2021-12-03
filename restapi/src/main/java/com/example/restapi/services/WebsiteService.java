@@ -1,38 +1,27 @@
 package com.example.restapi.services;
 
-import com.example.restapi.DTO.DtoMenu;
 import com.example.restapi.models.Category;
 import com.example.restapi.models.Menu;
-import com.example.restapi.models.ProductTable;
 import com.example.restapi.models.RestaurantInfo;
 import com.example.restapi.repos.CategoryRepo;
 import com.example.restapi.repos.MenuRepo;
 import com.example.restapi.repos.ProductTableRepo;
 import com.example.restapi.repos.RestaurantInfoRepo;
-import com.fasterxml.jackson.databind.JsonNode;
-
-import org.hibernate.boot.TempTableDdlTransactionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.UUIDEditor;
-import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.yaml.snakeyaml.tokens.ValueToken;
-
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Service
 public class WebsiteService implements IWebsiteService{
-
+  
+    //Used to cet extra info not important for final product
     private List<RestaurantInfo> restaurantinfo;
     private List<Menu> menu;
     private List<Category> cat;
-    //private List<Menu> getMenuByParam;
 
-    
+    //Connecting repos
     @Autowired
     private ProductTableRepo productTableRepo;
 
@@ -45,6 +34,8 @@ public class WebsiteService implements IWebsiteService{
     @Autowired
     private MenuRepo menuRepo;
 
+
+    //Some basic functions for getting extra information  not important for final product
     @Override
     public List<RestaurantInfo> getRestaurants() {
         restaurantinfo = RestaurantInfoRepo.getRestaurantInfo();

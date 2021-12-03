@@ -1,12 +1,9 @@
 package com.example.restapi.repos;
 
-import java.util.List;
+
 import java.util.UUID;
-
 import javax.transaction.Transactional;
-
 import com.example.restapi.models.ProductTable;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface  ProductTableRepo extends JpaRepository<ProductTable, String>{
 
+   
 
+    //Adding new products to producttable
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO producttable"+

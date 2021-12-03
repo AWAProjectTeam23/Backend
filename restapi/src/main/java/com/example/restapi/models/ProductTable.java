@@ -1,36 +1,18 @@
 package com.example.restapi.models;
 
-import java.io.Serializable;
 import java.util.UUID;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.JoinColumnOrFormula;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-
-import antlr.collections.List;
-
 
 @Entity
 @Table(name = "producttable")
 
+  
 public class ProductTable {
     @Id
     @Column(name = "item_uuid")
@@ -45,8 +27,9 @@ public class ProductTable {
     @Column(name = "imageurl")
     private String ImageURL;
 
-    @Column(name = "productdescription")
+    @Column(name = "product_description")
     private String productDescription;
+
 
     
    @ManyToOne
@@ -63,11 +46,21 @@ public class ProductTable {
     public ProductTable() {
     }
 
-    public ProductTable(UUID Item_Id, String ProductName, String PricePer, String ImageURL) {
+    public ProductTable(UUID Item_Id, String productDescription, String ProductName, String PricePer, String ImageURL) {
         this.Item_Id = Item_Id;
         this.ProductName = ProductName;
         this.PricePer = PricePer;
         this.ImageURL = ImageURL;
+        this.productDescription = productDescription;
+        
+    }
+
+    public String getProductDescription() {
+        return this.productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public UUID getItem_Id() {

@@ -1,29 +1,16 @@
 package com.example.restapi.api;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import com.example.restapi.DTO.DtoMenu;
-import com.example.restapi.models.Menu;
-import com.example.restapi.repos.MenuRepo;
 import com.example.restapi.services.WebsiteService;
-import com.fasterxml.jackson.databind.jsontype.impl.StdSubtypeResolver;
-import com.zaxxer.hikari.util.SuspendResumeLock;
-
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.MAX;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
-import net.bytebuddy.asm.Advice.Return;
 
 @RestController
 public class WebsiteController {
@@ -31,9 +18,8 @@ public class WebsiteController {
     @Autowired
     private WebsiteService webService;
 
-    @Autowired
-    private MenuRepo menuRepo;
 
+    //Some mappingfor extra information
     @GetMapping("/")
     public ResponseEntity<?> RestaurantListing() {
         var result = webService.getRestaurants();
@@ -50,6 +36,13 @@ public class WebsiteController {
         var resp = webService.getMenu();
         return ResponseEntity.ok(resp);
     }
+
+
+
+
+
+
+   //Get menus with restaurant UUID 
    @GetMapping("/menus/{id}")
    public ResponseEntity<?> MenuWithParam(@PathVariable UUID id) {
        var resp = webService.getMenuWithParm(id);
@@ -68,7 +61,7 @@ public class WebsiteController {
 
     if(!success) {
        return ResponseEntity.badRequest()
-        .body("Not Working?????!!!");
+        .body("Oops something went wrong!!!");
     }
        return ResponseEntity.ok().build();
     
@@ -82,14 +75,14 @@ public class WebsiteController {
    public ResponseEntity<?> addingNewMenu(@RequestBody Map<String, String> body){
         if(body == null) {
             return ResponseEntity.badRequest()
-            .body("Not valid information");   
+            .body("No valid information");   
         }
         
         var success  = webService.addMenuToResta(body);
 
         if(!success) {
             return ResponseEntity.badRequest()
-            .body("Check your data");
+            .body("Oops something went wrong!!!");
         }
         
         return ResponseEntity.ok().build();
