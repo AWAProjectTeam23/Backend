@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import javax.transaction.Transactional;
 import java.sql.Time;
 import java.util.UUID;
+import org.springframework.stereotype.Repository;
+import java.util.List;
 
 @Repository
 public interface RestaurantInfoRepo extends JpaRepository<RestaurantInfo, String> {

@@ -2,7 +2,6 @@ package com.example.restapi.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
@@ -30,6 +29,14 @@ public class ProductTable {
     @OneToMany(mappedBy = "productTable")
     @JsonBackReference
     public Set<OrderProductsTable> orderProducts;
+  
+    @ManyToOne
+    @sonBackReference 
+    @JoinColumn(name = "category_uuid")
+    public Category category;
+  
+    @Column(name = "product_description")
+    private String productDescription;
 
     public ProductTable() {}
 

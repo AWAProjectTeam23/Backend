@@ -5,6 +5,8 @@ import com.cloudinary.utils.ObjectUtils;
 import com.example.restapi.models.*;
 import com.example.restapi.repos.UserRepo;
 import com.example.restapi.security.PasswordEncoder;
+import java.util.Map;
+import java.util.UUID;
 import com.example.restapi.services.WebsiteService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.sql.Time;
@@ -20,6 +21,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class WebsiteController {
@@ -32,6 +38,7 @@ public class WebsiteController {
 
     @Autowired
     private WebsiteService webService;
+
 
     @GetMapping("/admin")
     public ResponseEntity<?> adminTestPage() {
@@ -47,7 +54,8 @@ public class WebsiteController {
         return ResponseEntity.ok(adminpage+username);
     }
 
-    @GetMapping("/public")
+    @GetMapping("/")
+
     public ResponseEntity<?> RestaurantListing() {
         var result = webService.getRestaurants();
         if(result == null) {
@@ -176,6 +184,66 @@ public class WebsiteController {
         if(!success) {
             return ResponseEntity.badRequest()
                     .body("Failed to create a new restaurant:" + model.getRestaurantName());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+   //Get menus with restaurant UUID 
+   @GetMapping("/menus/{id}")
+   public ResponseEntity<?> MenuWithParam(@PathVariable UUID id) {
+       var resp = webService.getMenuWithParm(id);
+       return ResponseEntity.ok(resp);
+   }
+
+   //For creating a new category
+   @PostMapping("/Manager/addCategory")
+   public ResponseEntity<?>  addingNewCategory(@RequestBody Map<String, String> body) {
+       if(body == null ) {
+           return ResponseEntity.badRequest()
+           .body("No valid information");
+       }
+       var success = webService.addNewCategory(body);
+
+    if(!success) {
+       return ResponseEntity.badRequest()
+        .body("Oops something went wrong!!!");
+    }
+       return ResponseEntity.ok().build();
+    
+    
+    }
+
+   //For creating a new restaurant menu
+   @PostMapping("/Manager/createMenu")
+   public ResponseEntity<?> addingNewMenu(@RequestBody Map<String, String> body){
+        if(body == null) {
+            return ResponseEntity.badRequest()
+            .body("No valid information");   
+        }
+        
+        var success  = webService.addMenuToResta(body);
+
+        if(!success) {
+            return ResponseEntity.badRequest()
+            .body("Oops something went wrong!!!");
+        }
+        
+        return ResponseEntity.ok().build();
+    }
+    
+    //For adding a new product to menu 
+    @PostMapping("/Manager/addNewProduct")
+    public ResponseEntity<?> addNewProduct(@RequestBody Map<String, String> body ){
+        if(body == null) {
+            return ResponseEntity.badRequest()
+            .body("Not valid data");
+        }
+        
+        var success = webService.addNewProduct(body);
+
+        if(!success) {
+            return ResponseEntity.badRequest()
+            .body("Oops something went wrong!!!");
         }
         return ResponseEntity.ok().build();
     }

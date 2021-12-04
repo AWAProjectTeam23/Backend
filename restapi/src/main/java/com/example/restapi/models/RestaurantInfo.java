@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "restaurantinfo")
@@ -87,5 +91,4 @@ public class RestaurantInfo {
 
     public String getPriceLevel() {
         return priceLevel;
-    }
 }
