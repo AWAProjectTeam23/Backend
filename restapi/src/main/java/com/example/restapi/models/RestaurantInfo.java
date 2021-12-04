@@ -45,11 +45,11 @@ public class RestaurantInfo {
     @JsonBackReference
     public Set<Orders> Orders;
 
-    public RestaurantInfo() {}
+    public RestaurantInfo() {
+    }
 
     public RestaurantInfo(UUID restaurantId, UUID restaurantManagerUserId, String restaurantName, String address,
-                          String open_hour, String closing_hour, String imageURL, String restaurantStyle, String priceLevel)
-    {
+                          String open_hour, String closing_hour, String imageURL, String restaurantStyle, String priceLevel) {
         this.restaurantId = restaurantId;
         this.restaurantManagerUserId = restaurantManagerUserId;
         this.restaurantName = restaurantName;
@@ -91,4 +91,5 @@ public class RestaurantInfo {
 
     public String getPriceLevel() {
         return priceLevel;
+    }
 }

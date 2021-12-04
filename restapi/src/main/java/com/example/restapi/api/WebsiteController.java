@@ -39,7 +39,6 @@ public class WebsiteController {
     @Autowired
     private WebsiteService webService;
 
-
     @GetMapping("/admin")
     public ResponseEntity<?> adminTestPage() {
         String adminpage = "admin page";
@@ -55,7 +54,6 @@ public class WebsiteController {
     }
 
     @GetMapping("/")
-
     public ResponseEntity<?> RestaurantListing() {
         var result = webService.getRestaurants();
         if(result == null) {

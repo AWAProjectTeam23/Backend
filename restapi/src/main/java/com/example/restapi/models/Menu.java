@@ -27,7 +27,7 @@ public class Menu {
     @JsonManagedReference
     public Set<Category> category;
 
-    public Menu(Long Menu_Id, Long Restaurant_Id) {
+    public Menu(UUID Menu_Id, UUID Restaurant_Id) {
         this.Menu_Id = Menu_Id;
         this.Restaurant_Id = Restaurant_Id;
     }
@@ -38,11 +38,6 @@ public class Menu {
 
     public UUID getRestaurant_Id() {
         return this.Restaurant_Id;
-    }
-
-    public Menu(UUID Menu_Id, UUID Restaurant_Id) {
-        this.Menu_Id = Menu_Id;
-        this.Restaurant_Id = Restaurant_Id;
     }
 
     public Menu() {

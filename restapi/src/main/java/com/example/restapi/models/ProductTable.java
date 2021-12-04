@@ -31,7 +31,7 @@ public class ProductTable {
     public Set<OrderProductsTable> orderProducts;
   
     @ManyToOne
-    @sonBackReference 
+    @JsonBackReference
     @JoinColumn(name = "category_uuid")
     public Category category;
   
