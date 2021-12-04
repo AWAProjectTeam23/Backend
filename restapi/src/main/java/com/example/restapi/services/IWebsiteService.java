@@ -1,10 +1,7 @@
 package com.example.restapi.services;
 
-import com.example.restapi.models.NewOrders;
-import com.example.restapi.models.RestaurantInfo;
-import com.example.restapi.models.RestaurantModel;
-import com.example.restapi.models.Category;
-import com.example.restapi.models.Menu;
+import com.example.restapi.models.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -32,5 +29,5 @@ public interface IWebsiteService {
 
     boolean addMenuToResta(Map<String, String> body);
 
-    boolean addNewProduct(Map<String, String> body);
+    boolean addNewProduct(ProductModel body, String imageUrl);
 }

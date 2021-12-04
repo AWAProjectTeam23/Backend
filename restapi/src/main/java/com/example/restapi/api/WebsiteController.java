@@ -48,12 +48,11 @@ public class WebsiteController {
     @GetMapping("/customer")
     public ResponseEntity<?> customerTestPage() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
         String adminpage = "customer page";
         return ResponseEntity.ok(adminpage+username);
     }
 
-    @GetMapping("/")
+    @GetMapping("/public")
     public ResponseEntity<?> RestaurantListing() {
         var result = webService.getRestaurants();
         if(result == null) {
@@ -76,7 +75,7 @@ public class WebsiteController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/customer/ShoppingCart")
+    @PostMapping("/public/ShoppingCart")
     public ResponseEntity<?> StoreCustomerOrder(@RequestBody NewOrders model) {
         if(model == null) {
             ResponseEntity.badRequest().body("Cannot be null");
@@ -89,7 +88,7 @@ public class WebsiteController {
     }
 
     @JsonView(View.OrdersWithRestaurantName.class)
-    @GetMapping("/customer/OrderHistory/{id}")
+    @GetMapping("/Customer/OrderHistory/{id}")
     public ResponseEntity<?> CustomerOrderHistory(@PathVariable UUID id) {
         if(id == null) {
             return ResponseEntity.badRequest().body("Given ID cannot be null");
@@ -115,7 +114,7 @@ public class WebsiteController {
         return ResponseEntity.ok(customerOrderStatusList);
     }
 
-    @GetMapping("/manager/restaurants")
+    @GetMapping("/public/restaurants")
     public ResponseEntity<?> ManagerRestaurants(@RequestParam("manager_id") UUID manager_id) {
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
@@ -128,7 +127,7 @@ public class WebsiteController {
     }
 
     @JsonView(View.OrdersWithCustomerName.class)
-    @GetMapping("/manager/OrderHistory/{restaurant_id}")
+    @GetMapping("/public/OrderHistory/{restaurant_id}")
     public ResponseEntity<?> ManagerOrderHistory(@PathVariable UUID restaurant_id) {
         if(restaurant_id == null) {
             return ResponseEntity.badRequest().body("Restaurant ID cannot be null");
@@ -141,19 +140,19 @@ public class WebsiteController {
     }
 
     @JsonView(View.OrdersWithCustomerName.class)
-    @GetMapping("/manager/OrderStatus")
+    @GetMapping("/public/OrderStatus")
     public ResponseEntity<?> ManagerOrdersStatus(@RequestParam("manager_id") UUID manager_id) {
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
         }
-        var managerOrderStatusList = webService.allCustomerOrders(manager_id);
+        var managerOrderStatusList = webService.allManagerOrders(manager_id);
         if(managerOrderStatusList == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(managerOrderStatusList);
     }
 
-    @PostMapping("/Manager/Orders")
+    @PostMapping("/public/Orders")
     public ResponseEntity<?> OrderReceived(@RequestBody Map<String, String> body) {
         if(body == null) {
             return ResponseEntity.badRequest().body("RequestBody cannot be null");
@@ -164,7 +163,7 @@ public class WebsiteController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/Manager/CreateRestaurant")
+    @PostMapping("/public/CreateRestaurant")
     public ResponseEntity<?> CreateRestaurant(@ModelAttribute RestaurantModel model) {
         String imageUrl = "";
         if(model == null) {
@@ -187,14 +186,14 @@ public class WebsiteController {
     }
 
    //Get menus with restaurant UUID 
-   @GetMapping("/menus/{id}")
-   public ResponseEntity<?> MenuWithParam(@PathVariable UUID id) {
-       var resp = webService.getMenuWithParm(id);
+   @GetMapping("/public/menus/{restaurant_id}")
+   public ResponseEntity<?> MenuWithParam(@PathVariable UUID restaurant_id) {
+       var resp = webService.getMenuWithParm(restaurant_id);
        return ResponseEntity.ok(resp);
    }
 
    //For creating a new category
-   @PostMapping("/Manager/addCategory")
+   @PostMapping("/public/addCategory")
    public ResponseEntity<?>  addingNewCategory(@RequestBody Map<String, String> body) {
        if(body == null ) {
            return ResponseEntity.badRequest()
@@ -207,12 +206,10 @@ public class WebsiteController {
         .body("Oops something went wrong!!!");
     }
        return ResponseEntity.ok().build();
-    
-    
     }
 
    //For creating a new restaurant menu
-   @PostMapping("/Manager/createMenu")
+   @PostMapping("/public/createMenu")
    public ResponseEntity<?> addingNewMenu(@RequestBody Map<String, String> body){
         if(body == null) {
             return ResponseEntity.badRequest()
@@ -230,14 +227,22 @@ public class WebsiteController {
     }
     
     //For adding a new product to menu 
-    @PostMapping("/Manager/addNewProduct")
-    public ResponseEntity<?> addNewProduct(@RequestBody Map<String, String> body ){
-        if(body == null) {
+    @PostMapping("/public/addNewProduct")
+    public ResponseEntity<?> addNewProduct(@ModelAttribute ProductModel model){
+        String imageUrl = "";
+        if(model == null) {
             return ResponseEntity.badRequest()
             .body("Not valid data");
         }
+
+        try {
+            Map map = cloudinary.uploader().upload(model.getImage().getBytes(), ObjectUtils.emptyMap());
+            imageUrl = (String) map.get("url");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
-        var success = webService.addNewProduct(body);
+        var success = webService.addNewProduct(model, imageUrl);
 
         if(!success) {
             return ResponseEntity.badRequest()

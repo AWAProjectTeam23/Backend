@@ -25,6 +25,9 @@ public class Orders {
     @Column(name = "completion_ts")
     private String completionTimeStamp;
 
+    @Column(name = "delivery_location")
+    private String delivery_location;
+
     @OneToMany(mappedBy = "orders")
     @JsonManagedReference
     @JsonView(View.Orders.class)
@@ -45,11 +48,13 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders (UUID order_id, String totalprice, Integer orderstatus, String completionTimeStamp) {
+    public Orders (UUID order_id, String totalprice, Integer orderstatus,
+                   String completionTimeStamp, String delivery_location) {
        this.order_id = order_id;
        this.totalprice = totalprice;
        this.orderstatus = orderstatus;
        this.completionTimeStamp = completionTimeStamp;
+       this.delivery_location = delivery_location;
     }
 
     @JsonView(View.Orders.class)
@@ -71,6 +76,9 @@ public class Orders {
     public String getCompletionTime() {
         return completionTimeStamp;
     }
+
+    @JsonView(View.Orders.class)
+    public String getDelivery_location() { return delivery_location; }
 
     @JsonView(View.OrdersWithRestaurantName.class)
     public String getRestaurantName() {

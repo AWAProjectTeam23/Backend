@@ -64,7 +64,8 @@ public class WebsiteService implements IWebsiteService{
     public boolean storeOrderInfo(NewOrders body) {
         var order_id = ordersRepo.insertOrder(UUID.fromString(body.getCustomer_uuid()),
                 UUID.fromString(body.getRestaurant_uuid()),
-                body.getTotalPrice());
+                body.getTotalPrice(),
+                body.getDelivery_location());
         var orderProducts = body.getOrderProducts();
         for (int i = 0; i < orderProducts.size(); i++) {
             var product_id = orderProducts.get(i).getProduct_uuid();
@@ -95,10 +96,10 @@ public class WebsiteService implements IWebsiteService{
         try {
             ordersRepo.updateOrderStatus(Integer.parseInt(body.get("orderStatusCode")),
                                         UUID.fromString(body.get("order_id")));
-            return true;
         } catch (Exception e) {
             return false;
         }
+        return true;
     }
 
     @Override
@@ -171,15 +172,10 @@ public class WebsiteService implements IWebsiteService{
    
    //Create new menu item
    @Override
-   public boolean addNewProduct(Map<String, String>body) {
-       var productName = body.get("productName");
-       var price = body.get("price");
-       var imageurl = body.get("imageurl");
-       var product_description = body.get("product_description");
-       var category_id = UUID.fromString(body.get("category_id"));
-
+   public boolean addNewProduct(ProductModel body, String imageUrl) {
        try {
-           productTableRepo.insertNewProduct(productName, price, imageurl, product_description, category_id);
+           productTableRepo.insertNewProduct(body.getProductName(), body.getPrice(), imageUrl,
+                   body.getProduct_description(), UUID.fromString(body.getCategory_uuid()));
        } catch (Exception e) {
            return false;
        }
