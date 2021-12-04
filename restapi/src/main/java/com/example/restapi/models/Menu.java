@@ -7,11 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 @Entity
 @Table(name = "restaurantmenu")
@@ -29,27 +27,19 @@ public class Menu {
     @JsonManagedReference
     public Set<Category> category;
 
-    
-
-
-
+    public Menu(Long Menu_Id, Long Restaurant_Id) {
+        this.Menu_Id = Menu_Id;
+        this.Restaurant_Id = Restaurant_Id;
+    }
 
     public UUID getMenu_Id() {
         return this.Menu_Id;
     }
-/*
-    public void setMenu_Id(UUID Menu_Id) {
-        this.Menu_Id = Menu_Id;
-    }
-*/
+
     public UUID getRestaurant_Id() {
         return this.Restaurant_Id;
     }
-/*
-    public void setRestaurant_Id(UUID Restaurant_Id) {
-        this.Restaurant_Id = Restaurant_Id;
-    }
-*/
+
     public Menu(UUID Menu_Id, UUID Restaurant_Id) {
         this.Menu_Id = Menu_Id;
         this.Restaurant_Id = Restaurant_Id;

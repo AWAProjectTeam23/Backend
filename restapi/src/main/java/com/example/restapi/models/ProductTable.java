@@ -1,99 +1,65 @@
 package com.example.restapi.models;
 
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "producttable")
-
-  
 public class ProductTable {
+
     @Id
+    @JsonIgnore
     @Column(name = "item_uuid")
-    private UUID Item_Id;
+    private UUID item_id;
 
     @Column(name = "productname")
-    private String ProductName;
+    private String productName;
 
-    @Column(name = "price") 
-    private String PricePer;
+    @JsonIgnore
+    @Column(name = "price")
+    private String pricePer;
 
+    @JsonIgnore     //REMOVE LATER
     @Column(name = "imageurl")
-    private String ImageURL;
+    private String image;
 
+    @OneToMany(mappedBy = "productTable")
+    @JsonBackReference
+    public Set<OrderProductsTable> orderProducts;
+  
+    @ManyToOne
+    @sonBackReference 
+    @JoinColumn(name = "category_uuid")
+    public Category category;
+  
     @Column(name = "product_description")
     private String productDescription;
 
+    public ProductTable() {}
 
-    
-   @ManyToOne
-   @JsonBackReference 
-   @JoinColumn(name = "category_uuid")
-   public Category category;
-  
-   /* FOR FUTURE
-  @OneToMany(mappedBy =  "producttable")
-  @JsonManagedReference
-  public Set<OrderProducts> OrderProducts;
-  */
-  
-    public ProductTable() {
+    public ProductTable(UUID item_id, String productName, String pricePer, String image) {
+        this.item_id = item_id;
+        this.productName = productName;
+        this.pricePer = pricePer;
+        this.image = image;
     }
 
-    public ProductTable(UUID Item_Id, String productDescription, String ProductName, String PricePer, String ImageURL) {
-        this.Item_Id = Item_Id;
-        this.ProductName = ProductName;
-        this.PricePer = PricePer;
-        this.ImageURL = ImageURL;
-        this.productDescription = productDescription;
-        
+    public UUID getItem_id() {
+        return item_id;
     }
 
-    public String getProductDescription() {
-        return this.productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
-
-    public UUID getItem_Id() {
-        return this.Item_Id;
-    }
-
-    public void setItem_Id(UUID Item_Id) {
-        this.Item_Id = Item_Id;
-    }
-
-    public String getProductName() {
-        return this.ProductName;
-    }
-
-    public void setProductName(String ProductName) {
-        this.ProductName = ProductName;
+    public String getName() {
+        return productName;
     }
 
     public String getPricePer() {
-        return this.PricePer;
+        return pricePer;
     }
 
-    public void setPricePer(String PricePer) {
-        this.PricePer = PricePer;
+    public String getImage() {
+        return image;
     }
-
-    public String getImageURL() {
-        return this.ImageURL;
-    }
-
-    public void setImageURL(String ImageURL) {
-        this.ImageURL = ImageURL;
-    }
-     
-
 }
