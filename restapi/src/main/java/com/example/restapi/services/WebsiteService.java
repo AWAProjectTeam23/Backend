@@ -126,6 +126,9 @@ public class WebsiteService implements IWebsiteService{
     public boolean storeAccountInfo(Map<String, String> body) {
         var username = body.get("username");
         var password = pwEncoder.encode(body.get("password"));
+        if(password == null) {
+            return false;
+        }
         var role = body.get("role");
 
         try {
