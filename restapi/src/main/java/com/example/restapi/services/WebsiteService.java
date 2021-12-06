@@ -47,6 +47,10 @@ public class WebsiteService implements IWebsiteService{
     @Autowired
     PasswordEncoder pwEncoder;
 
+    public String getUserID(String username ) {
+        return userRepo.getUserID(username);
+    }
+
     @Override
     public List<RestaurantInfo> getRestaurants() { return restaurantInfoRepo.findAll(); }
 

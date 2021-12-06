@@ -8,11 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Repository
 public interface UserRepo extends JpaRepository<UserInfo, String> {
     public UserInfo findByUsername(String username);
 
+    @Query(value = "SELECT user_uuid FROM userinfo WHERE username = :username", nativeQuery = true)
+    String getUserID(@Param("username") String username);
 
     @Transactional
     @Modifying

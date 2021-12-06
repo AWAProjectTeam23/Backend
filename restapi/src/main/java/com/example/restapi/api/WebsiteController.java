@@ -40,6 +40,18 @@ public class WebsiteController {
     @Autowired
     private WebsiteService webService;
 
+    @GetMapping("/getAccountId/")
+    public ResponseEntity<?> getAccountID(@RequestBody String body) {
+        if(body == null ) {
+            return ResponseEntity.badRequest().body("Can't be null");
+        }
+        var success = webService.getUserID(body);
+        if(success == null) {
+            return ResponseEntity.badRequest().body("User doesn't exist");
+        }
+        return ResponseEntity.ok(success);
+    }
+
     @GetMapping("/admin")
     public ResponseEntity<?> adminTestPage() {
         String adminpage = "admin page";

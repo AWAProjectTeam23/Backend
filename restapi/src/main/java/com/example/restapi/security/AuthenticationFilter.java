@@ -1,7 +1,10 @@
 package com.example.restapi.security;
 
 import com.example.restapi.api.JwtTools;
+import com.example.restapi.repos.UserRepo;
+import com.example.restapi.services.WebsiteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +18,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
