@@ -76,7 +76,7 @@ public class WebsiteController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/public/ShoppingCart")
+    @PostMapping("/customer/ShoppingCart")
     public ResponseEntity<?> StoreCustomerOrder(@RequestBody NewOrders model) {
         if(model == null) {
             ResponseEntity.badRequest().body("Cannot be null");
@@ -89,7 +89,7 @@ public class WebsiteController {
     }
 
     @JsonView(View.OrdersWithRestaurantName.class)
-    @GetMapping("/Customer/OrderHistory/{id}")
+    @GetMapping("/customer/OrderHistory/{id}")
     public ResponseEntity<?> CustomerOrderHistory(@PathVariable UUID id) {
         if(id == null) {
             return ResponseEntity.badRequest().body("Given ID cannot be null");
@@ -115,7 +115,7 @@ public class WebsiteController {
         return ResponseEntity.ok(customerOrderStatusList);
     }
 
-    @GetMapping("/public/restaurants")
+    @GetMapping("/manager/restaurants")
     public ResponseEntity<?> ManagerRestaurants(@RequestParam("manager_id") UUID manager_id) {
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
@@ -128,7 +128,7 @@ public class WebsiteController {
     }
 
     @JsonView(View.OrdersWithCustomerName.class)
-    @GetMapping("/public/OrderHistory/{restaurant_id}")
+    @GetMapping("/manager/OrderHistory/{restaurant_id}")
     public ResponseEntity<?> ManagerOrderHistory(@PathVariable UUID restaurant_id) {
         if(restaurant_id == null) {
             return ResponseEntity.badRequest().body("Restaurant ID cannot be null");
@@ -141,7 +141,7 @@ public class WebsiteController {
     }
 
     @JsonView(View.OrdersWithCustomerName.class)
-    @GetMapping("/public/OrderStatus")
+    @GetMapping("/manager/OrderStatus")
     public ResponseEntity<?> ManagerOrdersStatus(@RequestParam("manager_id") UUID manager_id) {
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
@@ -153,7 +153,7 @@ public class WebsiteController {
         return ResponseEntity.ok(managerOrderStatusList);
     }
 
-    @PostMapping("/public/Orders")
+    @PostMapping("/manager/Orders")
     public ResponseEntity<?> OrderReceived(@RequestBody Map<String, String> body) {
         if(body == null) {
             return ResponseEntity.badRequest().body("RequestBody cannot be null");
@@ -164,7 +164,7 @@ public class WebsiteController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/public/CreateRestaurant")
+    @PostMapping("/manager/CreateRestaurant")
     public ResponseEntity<?> CreateRestaurant(@ModelAttribute RestaurantModel model) {
         String imageUrl = "";
         if(model == null) {
@@ -194,7 +194,7 @@ public class WebsiteController {
    }
 
    //For creating a new category
-   @PostMapping("/public/addCategory")
+   @PostMapping("/manager/addCategory")
    public ResponseEntity<?>  addingNewCategory(@RequestBody Map<String, String> body) {
        if(body == null ) {
            return ResponseEntity.badRequest()
@@ -210,7 +210,7 @@ public class WebsiteController {
     }
 
    //For creating a new restaurant menu
-   @PostMapping("/public/createMenu")
+   @PostMapping("/manager/createMenu")
    public ResponseEntity<?> addingNewMenu(@RequestBody Map<String, String> body){
         if(body == null) {
             return ResponseEntity.badRequest()
@@ -228,7 +228,7 @@ public class WebsiteController {
     }
     
     //For adding a new product to menu 
-    @PostMapping("/public/addNewProduct")
+    @PostMapping("/manager/addNewProduct")
     public ResponseEntity<?> addNewProduct(@ModelAttribute ProductModel model){
         String imageUrl = "";
         if(model == null) {
