@@ -125,13 +125,13 @@ public class WebsiteService implements IWebsiteService{
     @Override
     public boolean storeAccountInfo(Map<String, String> body) {
         var username = body.get("username");
-        var password = pwEncoder.encode(body.get("password"));
+        var password = body.get("password");
         var role = body.get("role");
         if(password == "" || username == "" || role == "") {
             return false;
         }
         try {
-            userRepo.insertNewAccount(username, password, role);
+            userRepo.insertNewAccount(username, pwEncoder.encode(password), role);
         }
         catch (Exception e) {
             return false;
