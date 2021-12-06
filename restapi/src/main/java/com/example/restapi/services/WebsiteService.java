@@ -127,7 +127,7 @@ public class WebsiteService implements IWebsiteService{
         var username = body.get("username");
         var password = pwEncoder.encode(body.get("password"));
         var role = body.get("role");
-        if(password == null || username == null || role == null) {
+        if(password == "" || username == "" || role == "") {
             return false;
         }
         try {
