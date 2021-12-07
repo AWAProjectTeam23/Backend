@@ -27,7 +27,5 @@ public interface IWebsiteService {
 
     boolean addNewCategory(Map<String, String> body);
 
-    boolean addMenuToResta(Map<String, String> body);
-
     boolean addNewProduct(ProductModel body, String imageUrl);
 }

@@ -220,24 +220,6 @@ public class WebsiteController {
     }
        return ResponseEntity.ok().build();
     }
-
-   //For creating a new restaurant menu
-   @PostMapping("/manager/createMenu")
-   public ResponseEntity<?> addingNewMenu(@RequestBody Map<String, String> body){
-        if(body == null) {
-            return ResponseEntity.badRequest()
-            .body("No valid information");   
-        }
-        
-        var success  = webService.addMenuToResta(body);
-
-        if(!success) {
-            return ResponseEntity.badRequest()
-            .body("Oops something went wrong!!!");
-        }
-        
-        return ResponseEntity.ok().build();
-    }
     
     //For adding a new product to menu 
     @PostMapping("/manager/addNewProduct")
