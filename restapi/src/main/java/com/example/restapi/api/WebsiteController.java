@@ -39,18 +39,6 @@ public class WebsiteController {
     @Autowired
     private WebsiteService webService;
 
-    @GetMapping("/getAccountId/")
-    public ResponseEntity<?> getAccountID(@RequestBody String body) {
-        if(body == null ) {
-            return ResponseEntity.badRequest().body("Can't be null");
-        }
-        var success = webService.getUserID(body);
-        if(success == null) {
-            return ResponseEntity.badRequest().body("User doesn't exist");
-        }
-        return ResponseEntity.ok(success);
-    }
-
     @GetMapping("/admin")
     public ResponseEntity<?> adminTestPage() {
         String adminpage = "admin page";
@@ -100,8 +88,10 @@ public class WebsiteController {
     }
 
     @JsonView(View.OrdersWithRestaurantName.class)
-    @GetMapping("/customer/OrderHistory/{id}")
-    public ResponseEntity<?> CustomerOrderHistory(@PathVariable UUID id) {
+    @GetMapping("/customer/OrderHistory")
+    public ResponseEntity<?> CustomerOrderHistory() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID id = UUID.fromString(webService.getUserID(username));
         if(id == null) {
             return ResponseEntity.badRequest().body("Given ID cannot be null");
         }
@@ -114,11 +104,13 @@ public class WebsiteController {
 
     @JsonView(View.OrdersWithRestaurantName.class)
     @GetMapping("/customer/OrderStatus")
-    public ResponseEntity<?> CustomerOrdersStatus(@RequestParam("customer_id") UUID customer_id) {
-        if(customer_id == null) {
+    public ResponseEntity<?> CustomerOrdersStatus() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID id = UUID.fromString(webService.getUserID(username));
+        if(id == null) {
             return ResponseEntity.badRequest().body("Customer ID cannot be null");
         }
-        var customerOrderStatusList = webService.allCustomerOrders(customer_id);
+        var customerOrderStatusList = webService.allCustomerOrders(id);
 
         if(customerOrderStatusList == null) {
             return ResponseEntity.notFound().build();
@@ -127,7 +119,9 @@ public class WebsiteController {
     }
 
     @GetMapping("/manager/restaurants")
-    public ResponseEntity<?> ManagerRestaurants(@RequestParam("manager_id") UUID manager_id) {
+    public ResponseEntity<?> ManagerRestaurants() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID manager_id = UUID.fromString(webService.getUserID(username));
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
         }
@@ -153,7 +147,9 @@ public class WebsiteController {
 
     @JsonView(View.OrdersWithCustomerName.class)
     @GetMapping("/manager/OrderStatus")
-    public ResponseEntity<?> ManagerOrdersStatus(@RequestParam("manager_id") UUID manager_id) {
+    public ResponseEntity<?> ManagerOrdersStatus() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID manager_id = UUID.fromString(webService.getUserID(username));
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
         }
