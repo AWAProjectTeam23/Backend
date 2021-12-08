@@ -1,5 +1,6 @@
 package com.example.restapi.repos;
 
+import com.example.restapi.models.GetUserID;
 import com.example.restapi.models.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,8 +15,8 @@ import java.util.UUID;
 public interface UserRepo extends JpaRepository<UserInfo, String> {
     public UserInfo findByUsername(String username);
 
-    @Query(value = "SELECT user_uuid FROM userinfo WHERE username = :username", nativeQuery = true)
-    String getUserID(@Param("username") String username);
+    @Query(value = "SELECT * FROM userinfo WHERE username = :username", nativeQuery = true)
+    GetUserID getUserID(@Param("username") String username);
 
     @Transactional
     @Modifying

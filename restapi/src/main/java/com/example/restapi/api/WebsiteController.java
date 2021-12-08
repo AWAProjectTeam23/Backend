@@ -91,7 +91,7 @@ public class WebsiteController {
     @GetMapping("/customer/OrderHistory")
     public ResponseEntity<?> CustomerOrderHistory() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID id = UUID.fromString(webService.getUserID(username));
+        UUID id = webService.getUserID(username);
         if(id == null) {
             return ResponseEntity.badRequest().body("Given ID cannot be null");
         }
@@ -106,7 +106,7 @@ public class WebsiteController {
     @GetMapping("/customer/OrderStatus")
     public ResponseEntity<?> CustomerOrdersStatus() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID id = UUID.fromString(webService.getUserID(username));
+        UUID id = webService.getUserID(username);
         if(id == null) {
             return ResponseEntity.badRequest().body("Customer ID cannot be null");
         }
@@ -121,7 +121,8 @@ public class WebsiteController {
     @GetMapping("/manager/restaurants")
     public ResponseEntity<?> ManagerRestaurants() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID manager_id = UUID.fromString(webService.getUserID(username));
+        System.out.println(username);
+        UUID manager_id = webService.getUserID(username);
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
         }
@@ -149,7 +150,7 @@ public class WebsiteController {
     @GetMapping("/manager/OrderStatus")
     public ResponseEntity<?> ManagerOrdersStatus() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID manager_id = UUID.fromString(webService.getUserID(username));
+        UUID manager_id = webService.getUserID(username);
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
         }
