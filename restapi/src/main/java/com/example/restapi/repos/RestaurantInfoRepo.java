@@ -22,8 +22,7 @@ public interface RestaurantInfoRepo extends JpaRepository<RestaurantInfo, String
             "restaurant_uuid, " +
             "restaurantname, " +
             "address, " +
-            "open_hour, " +
-            "closing_hour, " +
+            "operating_hours, " +
             "imageurl, " +
             "restauranttype, " +
             "pricelevel, " +
@@ -34,8 +33,7 @@ public interface RestaurantInfoRepo extends JpaRepository<RestaurantInfo, String
                     "uuid_generate_v4(), " +
                     ":restName, " +
                     ":address, " +
-                    ":open, " +
-                    ":closing, " +
+                    ":operating_hours, " +
                     ":image, " +
                     ":type, " +
                     ":priceLevel, " +
@@ -44,8 +42,7 @@ public interface RestaurantInfoRepo extends JpaRepository<RestaurantInfo, String
             , nativeQuery = true)
     void insertNewRestaurant(@Param("restName") String restName,
                              @Param("address") String address,
-                             @Param("open") Time open,
-                             @Param("closing") Time closing,
+                             @Param("operating_hours") String operating_hours,
                              @Param("image") String image,
                              @Param("type") String type,
                              @Param("priceLevel") Integer priceLevel,

@@ -28,8 +28,8 @@ public class RestaurantInfo {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "open_hour")
-    private String open_hour;
+    @Column(name = "operating_hours")
+    private String operating_hours;
 
     @Column(name = "closing_hour")
     private String closing_hour;
@@ -55,13 +55,12 @@ public class RestaurantInfo {
     }
 
     public RestaurantInfo(UUID restaurantId, UUID restaurantManagerUserId, String restaurantName, String address,
-                          String open_hour, String closing_hour, String imageURL, String restaurantStyle, String priceLevel) {
+                          String operating_hours, String imageURL, String restaurantStyle, String priceLevel) {
         this.restaurantId = restaurantId;
         this.restaurantManagerUserId = restaurantManagerUserId;
         this.restaurantName = restaurantName;
+        this.operating_hours = operating_hours;
         this.address = address;
-        this.open_hour = open_hour;
-        this.closing_hour = closing_hour;
         this.imageURL = imageURL;
         this.restaurantStyle = restaurantStyle;
         this.priceLevel = priceLevel;
@@ -84,7 +83,7 @@ public class RestaurantInfo {
     }
 
     public String getOperatingHour() {
-        return open_hour + " " + closing_hour;
+        return operating_hours;
     }
 
     public String getImageURL() {

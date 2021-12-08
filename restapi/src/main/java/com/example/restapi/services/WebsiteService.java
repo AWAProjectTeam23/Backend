@@ -108,14 +108,13 @@ public class WebsiteService implements IWebsiteService{
     {
         var name = model.getRestaurantName();
         var address = model.getAddress();
-        var open = Time.valueOf(model.getOpen_hour());
-        var closing = Time.valueOf(model.getClosing_hour());
+        var operating_hours = model.getOperating_hours();
         var type = model.getStyle();
         var priceLevel = Integer.parseInt(model.getPriceLevel());
         var manager_id = UUID.fromString(model.getManager_id());
 
         try {
-            restaurantInfoRepo.insertNewRestaurant(name, address, open, closing, imageURL, type, priceLevel, manager_id);
+            restaurantInfoRepo.insertNewRestaurant(name, address, operating_hours, imageURL, type, priceLevel, manager_id);
         }
         catch (Exception e) {
             return false;
