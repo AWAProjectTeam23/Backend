@@ -11,10 +11,8 @@ import java.sql.Time;
 import java.util.*;
 import java.util.stream.Collectors;
 import com.example.restapi.models.Category;
-import com.example.restapi.models.Menu;
 import com.example.restapi.models.RestaurantInfo;
 import com.example.restapi.repos.CategoryRepo;
-import com.example.restapi.repos.MenuRepo;
 import com.example.restapi.repos.ProductTableRepo;
 import com.example.restapi.repos.RestaurantInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +39,7 @@ public class WebsiteService implements IWebsiteService{
     @Autowired
     private UserRepo userRepo;
   
-    @Autowired
-    private MenuRepo menuRepo;
+
 
     @Autowired
     PasswordEncoder pwEncoder;
@@ -145,23 +142,10 @@ public class WebsiteService implements IWebsiteService{
 
 //Get menu with restaurant UUID  
     @Override
-    public List<Menu> getMenuWithParm(UUID id) {
-        return menuRepo.getMenuById(id);
+    public List<RestaurantInfo> getMenuWithParm(UUID id) {
+        return restaurantInfoRepo.getMenuById(id);
     }
 
-//New restaurant menu
-    @Override
-    public boolean addMenuToResta(Map<String, String> body) {
-
-        var menuName = body.get("menuName");
-        var restaurant_id = UUID.fromString(body.get("restaurant_id"));
-        try {
-            menuRepo.addMenuToRestaurant(menuName, restaurant_id);
-        } catch (Exception e) {
-        return false;
-        }
-        return true;
-    }
   
 //Add new category
      @Override

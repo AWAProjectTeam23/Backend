@@ -50,4 +50,11 @@ public interface RestaurantInfoRepo extends JpaRepository<RestaurantInfo, String
                              @Param("type") String type,
                              @Param("priceLevel") Integer priceLevel,
                              @Param("manager_uuid") UUID manager_id);
+
+
+final String query2 = "SELECT * FROM restaurantinfo WHERE restaurant_uuid = :id";
+   
+@Query(value = query2, nativeQuery = true)
+List<RestaurantInfo> getMenuById(@Param("id") UUID id);
+
 }

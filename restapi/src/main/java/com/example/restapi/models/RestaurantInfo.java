@@ -1,6 +1,8 @@
 package com.example.restapi.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
@@ -44,6 +46,10 @@ public class RestaurantInfo {
     @OneToMany(mappedBy = "restaurantinfo")
     @JsonBackReference
     public Set<Orders> Orders;
+
+    @OneToMany(mappedBy = "restaurantinfo")
+    @JsonManagedReference
+    public Set<Category> category;
 
     public RestaurantInfo() {
     }
