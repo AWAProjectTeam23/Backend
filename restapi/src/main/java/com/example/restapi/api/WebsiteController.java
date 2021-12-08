@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class WebsiteController {
 
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
