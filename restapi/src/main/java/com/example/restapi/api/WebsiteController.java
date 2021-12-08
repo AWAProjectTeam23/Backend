@@ -121,8 +121,7 @@ public class WebsiteController {
     @GetMapping("/manager/restaurants")
     public ResponseEntity<?> ManagerRestaurants() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println(username);
-        UUID manager_id = webService.getUserID(username);
+        var manager_id = webService.getUserID(username);
         if(manager_id == null) {
             return ResponseEntity.badRequest().body("Manager ID cannot be null");
         }

@@ -31,9 +31,6 @@ public class RestaurantInfo {
     @Column(name = "operating_hours")
     private String operating_hours;
 
-    @Column(name = "closing_hour")
-    private String closing_hour;
-
     @Column(name = "imageurl")
     private String imageURL;
 

@@ -15,8 +15,8 @@ import java.util.UUID;
 public interface UserRepo extends JpaRepository<UserInfo, String> {
     public UserInfo findByUsername(String username);
 
-    @Query(value = "SELECT * FROM userinfo WHERE username = :username", nativeQuery = true)
-    GetUserID getUserID(@Param("username") String username);
+    @Query(value = "SELECT Cast(user_uuid as VARCHAR) FROM userinfo WHERE username = :username", nativeQuery = true)
+    UUID getUserID(@Param("username") String username);
 
     @Transactional
     @Modifying

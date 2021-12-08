@@ -38,16 +38,12 @@ public class WebsiteService implements IWebsiteService{
 
     @Autowired
     private UserRepo userRepo;
-  
-
 
     @Autowired
     PasswordEncoder pwEncoder;
 
     public UUID getUserID(String username ) {
-        var id = userRepo.getUserID(username);
-        UUID user_id = id.getUser_id();
-        return user_id;
+        return userRepo.getUserID(username);
     }
 
     @Override
