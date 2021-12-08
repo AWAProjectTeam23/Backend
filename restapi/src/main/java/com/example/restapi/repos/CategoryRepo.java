@@ -21,17 +21,17 @@ public interface CategoryRepo extends JpaRepository<Category, String> {
             "( "+
             "category_uuid, "+        
             "categoryname, "+
-            "menu_uuid "+
+            "category_uuid "+
             ") "+
                 "VALUES "+
                      "( "+
                      "uuid_generate_v4(), "+
                      ":categoryName, "+
-                     ":menu_id "+
+                     ":categoryId "+
                      ") "
                      
                       , nativeQuery = true)
                      void addNewCategory(@Param("categoryName")String categoryName,
-                                        @Param("menu_id") UUID menu_id);
+                                        @Param("categoryId") UUID categoryId);
 
 }
