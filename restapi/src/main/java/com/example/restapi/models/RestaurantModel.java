@@ -9,9 +9,8 @@ public class RestaurantModel {
     private String operating_hours;
     private String style;
     private String priceLevel;
-    private String manager_id;
 
-    public RestaurantModel(MultipartFile image, String manager_id, String restaurantName,
+    public RestaurantModel(MultipartFile image, String restaurantName,
                            String address, String operating_hours, String style, String priceLevel) {
         this.image = image;
         this.restaurantName = restaurantName;
@@ -19,15 +18,10 @@ public class RestaurantModel {
         this.operating_hours = operating_hours;
         this.style = style;
         this.priceLevel = priceLevel;
-        this.manager_id = manager_id;
     }
 
     public MultipartFile getImage() {
         return image;
-    }
-
-    public String getManager_id() {
-        return manager_id;
     }
 
     public String getRestaurantName() {

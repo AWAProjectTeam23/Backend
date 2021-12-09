@@ -21,7 +21,7 @@ public interface IWebsiteService {
 
     boolean updateOrderStatus(Map<String, String> body);
 
-    boolean storeRestaurantInfo(RestaurantModel model, String imageURL);
+    boolean storeRestaurantInfo(RestaurantModel model, String imageURL, UUID manager_id);
 
     boolean storeAccountInfo(Map<String, String> body);
 

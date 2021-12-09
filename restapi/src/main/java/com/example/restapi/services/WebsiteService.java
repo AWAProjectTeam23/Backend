@@ -102,14 +102,13 @@ public class WebsiteService implements IWebsiteService{
     }
 
     @Override
-    public boolean storeRestaurantInfo(RestaurantModel model, String imageURL)
+    public boolean storeRestaurantInfo(RestaurantModel model, String imageURL, UUID manager_id)
     {
         var name = model.getRestaurantName();
         var address = model.getAddress();
         var operating_hours = model.getOperating_hours();
         var type = model.getStyle();
         var priceLevel = Integer.parseInt(model.getPriceLevel());
-        var manager_id = UUID.fromString(model.getManager_id());
 
         try {
             restaurantInfoRepo.insertNewRestaurant(name, address, operating_hours, imageURL, type, priceLevel, manager_id);

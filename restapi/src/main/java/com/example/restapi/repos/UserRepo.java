@@ -1,6 +1,5 @@
 package com.example.restapi.repos;
 
-import com.example.restapi.models.GetUserID;
 import com.example.restapi.models.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

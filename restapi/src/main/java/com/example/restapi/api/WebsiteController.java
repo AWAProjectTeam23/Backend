@@ -173,6 +173,8 @@ public class WebsiteController {
 
     @PostMapping("/manager/CreateRestaurant")
     public ResponseEntity<?> CreateRestaurant(@ModelAttribute RestaurantModel model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID manager_id = webService.getUserID(username);
         String imageUrl = "";
         if(model == null) {
             return ResponseEntity.badRequest()
@@ -185,7 +187,7 @@ public class WebsiteController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        var success = webService.storeRestaurantInfo(model, imageUrl);
+        var success = webService.storeRestaurantInfo(model, imageUrl, manager_id);
         if(!success) {
             return ResponseEntity.badRequest()
                     .body("Failed to create a new restaurant:" + model.getRestaurantName());
