@@ -147,9 +147,9 @@ public class WebsiteService implements IWebsiteService{
      @Override
      public boolean addNewCategory(Map<String, String> body) {
          var categoryName = body.get("categoryName");
-         var categoryId= UUID.fromString(body.get("categoryId"));
+         var restaurantId= UUID.fromString(body.get("restaurantId"));
          try {
-             categoryRepo.addNewCategory(categoryName, categoryId);
+             categoryRepo.addNewCategory(categoryName, restaurantId);
          } catch (Exception e) {
              return false;
          }
