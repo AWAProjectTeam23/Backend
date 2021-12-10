@@ -11,18 +11,20 @@ import java.util.UUID;
 public class ProductTable {
 
     @Id
-    @JsonIgnore
     @Column(name = "item_uuid")
     private UUID item_id;
+
+    @Column(name = "product_description")
+    private String productDescription;
 
     @Column(name = "productname")
     private String productName;
 
-    @JsonIgnore
+    
     @Column(name = "price")
     private String pricePer;
 
-    @JsonIgnore     //REMOVE LATER
+
     @Column(name = "imageurl")
     private String image;
 
@@ -32,19 +34,22 @@ public class ProductTable {
   
     @ManyToOne
     @JsonBackReference
+
+  
     @JoinColumn(name = "category_uuid")
     public Category category;
   
-    @Column(name = "product_description")
-    private String productDescription;
+
 
     public ProductTable() {}
 
-    public ProductTable(UUID item_id, String productName, String pricePer, String image) {
+    public ProductTable(UUID item_id, String productName, String pricePer, String image, String productDescription) {
         this.item_id = item_id;
         this.productName = productName;
         this.pricePer = pricePer;
         this.image = image;
+        this.productDescription = productDescription;
+    
     }
 
     public UUID getItem_id() {
@@ -61,5 +66,13 @@ public class ProductTable {
 
     public String getImage() {
         return image;
+    }
+   
+    public String getProductDescription() {
+        return this.productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 }

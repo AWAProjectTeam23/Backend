@@ -1,6 +1,7 @@
 package com.example.restapi.repos;
 
 
+import java.util.List;
 import java.util.UUID;
 import javax.transaction.Transactional;
 import com.example.restapi.models.ProductTable;
@@ -12,6 +13,10 @@ import org.springframework.data.repository.query.Param;
 public interface  ProductTableRepo extends JpaRepository<ProductTable, String>{
 
    
+    @Query(value = "SELECT * FROM producttable JOIN category ON "+
+                    "producttable.category_uuid = category.category_uuid WHERE "+
+                    "category.restaurant_uuid = :id" , nativeQuery = true)
+    List<ProductTable> getProducttableItemsWithId(@Param("id") UUID restaurant_id);
 
     //Adding new products to producttable
     @Transactional

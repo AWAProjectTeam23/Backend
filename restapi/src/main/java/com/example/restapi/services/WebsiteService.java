@@ -136,6 +136,11 @@ public class WebsiteService implements IWebsiteService{
         return true;
     }
 
+
+    @Override
+    public List<ProductTable> getStuffFromProd(UUID restaurant_id){
+        return productTableRepo.getProducttableItemsWithId(restaurant_id);
+    }
 //Get menu with restaurant UUID  
     @Override
     public List<RestaurantInfo> getMenuWithParm(UUID id) {

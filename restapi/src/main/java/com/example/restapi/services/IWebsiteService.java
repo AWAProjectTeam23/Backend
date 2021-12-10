@@ -16,6 +16,8 @@ public interface IWebsiteService {
     List<?> allManagerOrders(UUID id);
 
     List<?> getMenuWithParm(UUID id);
+    
+    List<?> getStuffFromProd(UUID id);
 
     boolean storeOrderInfo(NewOrders body);
 

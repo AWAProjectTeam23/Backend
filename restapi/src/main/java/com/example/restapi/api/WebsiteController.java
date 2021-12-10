@@ -194,6 +194,12 @@ public class WebsiteController {
         }
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/public/prod/{restaurant_id}")
+    public ResponseEntity<?> StuffFromProd(@PathVariable UUID restaurant_id) {
+        var resp = webService.getStuffFromProd(restaurant_id);
+        return ResponseEntity.ok(resp);
+    } 
+
 
    //Get menus with restaurant UUID 
    @GetMapping("/public/menus/{restaurant_id}")
