@@ -11,4 +11,12 @@ public class View {
 
     public static interface OrdersWithRestaurantName extends Orders {
     }
+
+    public static interface ProductTable  {
+
+    }
+
+    public static interface prodWithExtra extends ProductTable {
+        
+    }
 }

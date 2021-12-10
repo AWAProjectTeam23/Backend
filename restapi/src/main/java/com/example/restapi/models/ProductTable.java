@@ -2,6 +2,8 @@ package com.example.restapi.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
@@ -26,8 +28,6 @@ public class ProductTable {
     @Column(name = "imageurl")
     private String image;
 
-    @Column(name = "categoryname")
-    private String categoryName;
 
     @OneToMany(mappedBy = "productTable")
     @JsonBackReference
@@ -42,47 +42,46 @@ public class ProductTable {
 
     public ProductTable() {}
 
-    public ProductTable(UUID item_id, String categoryName, String productName, String pricePer, String image, String productDescription) {
+    public ProductTable(UUID item_id, String productName, String pricePer, String image, String productDescription) {
         this.item_id = item_id;
         this.productName = productName;
         this.pricePer = pricePer;
         this.image = image;
         this.productDescription = productDescription;
-        this.categoryName = categoryName;
+    
     
     }
 
+    @JsonView(View.prodWithExtra.class)
     public UUID getItem_id() {
         return item_id;
     }
-
+    @JsonView(View.prodWithExtra.class)
     public String getName() {
         return productName;
     }
-
+    @JsonView(View.prodWithExtra.class)
     public String getPricePer() {
         return pricePer;
     }
 
-
-    public String getCategoryName() {
-        return this.categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-
+    @JsonView(View.prodWithExtra.class)
     public String getImage() {
         return image;
     }
-   
+    @JsonView(View.prodWithExtra.class)
     public String getProductDescription() {
         return this.productDescription;
     }
-
+    @JsonView(View.prodWithExtra.class)
+    public String getCategoryName() {
+        return category.getCategoryName();
+    }
+    
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
     }
+
+
+    
 }

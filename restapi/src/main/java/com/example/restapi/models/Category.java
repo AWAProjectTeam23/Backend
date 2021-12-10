@@ -34,10 +34,10 @@ public class Category {
     
 
    
+    //was Jsonignmore
     
     @ManyToOne
     @JsonBackReference
-    //@JsonIgnore
     @JoinColumn(name = "restaurant_uuid")
     public RestaurantInfo restaurantinfo;
 
