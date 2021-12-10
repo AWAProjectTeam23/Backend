@@ -60,8 +60,8 @@ public class WebsiteService implements IWebsiteService{
     }
 
     @Override
-    public boolean storeOrderInfo(NewOrders body) {
-        var order_id = ordersRepo.insertOrder(UUID.fromString(body.getCustomer_uuid()),
+    public boolean storeOrderInfo(NewOrders body, UUID id) {
+        var order_id = ordersRepo.insertOrder(id,
                 UUID.fromString(body.getRestaurant_uuid()),
                 body.getTotalPrice(),
                 body.getDelivery_location());

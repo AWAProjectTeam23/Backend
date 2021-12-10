@@ -77,10 +77,12 @@ public class WebsiteController {
 
     @PostMapping("/customer/ShoppingCart")
     public ResponseEntity<?> StoreCustomerOrder(@RequestBody NewOrders model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID id = webService.getUserID(username);
         if(model == null) {
             ResponseEntity.badRequest().body("Cannot be null");
         }
-        var result = webService.storeOrderInfo(model);
+        var result = webService.storeOrderInfo(model, id);
         if(result == false) {
             return ResponseEntity.badRequest().body("Couldn't place order");
         }

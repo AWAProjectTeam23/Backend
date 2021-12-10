@@ -19,7 +19,7 @@ public interface IWebsiteService {
     
     List<?> getStuffFromProd(UUID id);
 
-    boolean storeOrderInfo(NewOrders body);
+    boolean storeOrderInfo(NewOrders body, UUID id);
 
     boolean updateOrderStatus(Map<String, String> body);
 
