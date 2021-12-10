@@ -19,14 +19,15 @@ public class ProductTable {
 
     @Column(name = "productname")
     private String productName;
-
     
     @Column(name = "price")
     private String pricePer;
 
-
     @Column(name = "imageurl")
     private String image;
+
+    @Column(name = "categoryname")
+    private String categoryName;
 
     @OneToMany(mappedBy = "productTable")
     @JsonBackReference
@@ -34,8 +35,6 @@ public class ProductTable {
   
     @ManyToOne
     @JsonBackReference
-
-  
     @JoinColumn(name = "category_uuid")
     public Category category;
   
@@ -43,12 +42,13 @@ public class ProductTable {
 
     public ProductTable() {}
 
-    public ProductTable(UUID item_id, String productName, String pricePer, String image, String productDescription) {
+    public ProductTable(UUID item_id, String categoryName, String productName, String pricePer, String image, String productDescription) {
         this.item_id = item_id;
         this.productName = productName;
         this.pricePer = pricePer;
         this.image = image;
         this.productDescription = productDescription;
+        this.categoryName = categoryName;
     
     }
 
@@ -63,6 +63,16 @@ public class ProductTable {
     public String getPricePer() {
         return pricePer;
     }
+
+
+    public String getCategoryName() {
+        return this.categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
 
     public String getImage() {
         return image;

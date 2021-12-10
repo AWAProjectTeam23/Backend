@@ -26,10 +26,9 @@ import org.springframework.security.core.authority.mapping.MappableAttributesRet
 public class Category {
     
     @Id
-    @JsonIgnore
     @Column(name = "category_uuid", insertable = false, updatable =  false )
     private UUID Category_Id;
-    @JsonIgnore
+
     @Column(name = "categoryname")
     private String CategoryName;
     
@@ -52,19 +51,19 @@ public class Category {
     public UUID getCategory_Id() {
         return this.Category_Id;
     }
-/*
+
     public void setCategory_Id(UUID Category_Id) {
         this.Category_Id = Category_Id;
     }
-*/
+
     public String getCategoryName() {
         return this.CategoryName;
     }
-/*
+
     public void setCategoryName(String CategoryName) {
         this.CategoryName = CategoryName;
     }
-*/
+
     public Category(UUID Category_Id, String CategoryName) {
         this.Category_Id = Category_Id;
         this.CategoryName = CategoryName;
