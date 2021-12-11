@@ -120,6 +120,17 @@ public class WebsiteController {
         return ResponseEntity.ok(customerOrderStatusList);
     }
 
+    @PostMapping("/customer/Orders")
+    public ResponseEntity<?> CustomerOrderReceived(@RequestBody Map<String, String> body) {
+        if(body == null) {
+            return ResponseEntity.badRequest().body("RequestBody cannot be null");
+        }
+        if(webService.updateOrderStatus(body) == false) {
+            return ResponseEntity.internalServerError().body("Could not update order status in DB");
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/manager/restaurants")
     public ResponseEntity<?> ManagerRestaurants() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
