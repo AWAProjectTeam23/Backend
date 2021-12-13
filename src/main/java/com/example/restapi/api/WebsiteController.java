@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 public class WebsiteController {
 
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
