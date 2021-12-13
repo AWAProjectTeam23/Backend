@@ -1,10 +1,12 @@
 package com.example.restapi.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,8 +24,13 @@ public class Orders {
     @Column(name = "orderstatus")
     private Integer orderstatus;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @Column(name = "creation_ts")
+    private Date creationTimeStamp;
+
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     @Column(name = "completion_ts")
-    private String completionTimeStamp;
+    private Date completionTimeStamp;
 
     @Column(name = "delivery_location")
     private String delivery_location;
@@ -48,11 +55,12 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders (UUID order_id, String totalprice, Integer orderstatus,
-                   String completionTimeStamp, String delivery_location) {
+    public Orders (UUID order_id, String totalprice, Integer orderstatus, Date creationTimeStamp,
+                   Date completionTimeStamp, String delivery_location) {
        this.order_id = order_id;
        this.totalprice = totalprice;
        this.orderstatus = orderstatus;
+       this.creationTimeStamp = creationTimeStamp;
        this.completionTimeStamp = completionTimeStamp;
        this.delivery_location = delivery_location;
     }
@@ -73,7 +81,10 @@ public class Orders {
     }
 
     @JsonView(View.Orders.class)
-    public String getCompletionTime() {
+    public Date getCreationTimeStamp() { return creationTimeStamp; }
+
+    @JsonView(View.Orders.class)
+    public Date getCompletionTimeStamp() {
         return completionTimeStamp;
     }
 

@@ -94,12 +94,23 @@ public class WebsiteService implements IWebsiteService{
 
     @Override
     public boolean updateOrderStatus(Map<String, String> body) {
-        try {
-            ordersRepo.updateOrderStatus(Integer.parseInt(body.get("orderStatusCode")),
-                                        UUID.fromString(body.get("order_id")));
-        } catch (Exception e) {
-            return false;
+        var statusCode = Integer.parseInt(body.get("orderStatusCode"));
+        if(statusCode == 5) {
+            try {
+                ordersRepo.updateOrderStatusToComplete(Integer.parseInt(body.get("orderStatusCode")),
+                        UUID.fromString(body.get("order_id")));
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            try {
+                ordersRepo.updateOrderStatus(Integer.parseInt(body.get("orderStatusCode")),
+                        UUID.fromString(body.get("order_id")));
+            } catch (Exception e) {
+                return false;
+            }
         }
+
         return true;
     }
 
