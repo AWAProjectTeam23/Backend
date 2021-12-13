@@ -28,14 +28,16 @@ public interface OrdersRepo extends JpaRepository<Orders, String> {
                                         "restaurant_uuid, " +
                                         "totalprice, " +
                                         "delivery_location, " +
-                                        "orderstatus ) " +
+                                        "orderstatus," +
+                                        "creation_ts ) " +
                     "VALUES ( " +
                                         "uuid_generate_v4(), " +
                                         ":customer_id, " +
                                         ":restaurant_id, " +
                                         ":totalprice, " +
                                         ":delivery_location, " +
-                                        "1 )" +
+                                        "1, " +
+                                        "NOW() ) " +
             "RETURNING Cast(order_uuid as VARCHAR)", nativeQuery = true)
     UUID insertOrder(@Param("customer_id") UUID customer_id,
                      @Param("restaurant_id") UUID restaurant_id,
@@ -63,5 +65,10 @@ public interface OrdersRepo extends JpaRepository<Orders, String> {
     @Modifying
     @Query(value = "UPDATE orders SET orderstatus = :statusCode WHERE order_uuid = :order_id", nativeQuery = true)
     void updateOrderStatus(@Param("statusCode") Integer statusCode, @Param("order_id") UUID order_id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE orders SET orderstatus = :statusCode, completion_ts = NOW() WHERE order_uuid = :order_id", nativeQuery = true)
+    void updateOrderStatusToComplete(@Param("statusCode") Integer statusCode, @Param("order_id") UUID order_id);
 
 }
